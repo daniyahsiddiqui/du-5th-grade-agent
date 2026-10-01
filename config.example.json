@@ -1,0 +1,10 @@
+{
+  "sender_email": "your_email@gmail.com",
+  "sender_password": "your_16_char_app_password",
+  "recipient_email": "parent1@gmail.com, parent2@gmail.com",
+  "smtp_host": "smtp.gmail.com",
+  "smtp_port": 587,
+  "schedule_day": "Sunday",
+  "schedule_time": "07:00",
+  "whatsapp_group_name": "Test_1"
+}

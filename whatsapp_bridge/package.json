@@ -1,0 +1,13 @@
+{
+  "name": "du-5th-grade-whatsapp-bridge",
+  "version": "1.0.0",
+  "description": "WhatsApp Personal Account Bridge for DU 5th Grade Q&A Bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}

@@ -1,0 +1,23 @@
+# Credentials & Sensitive Session Files
+config.json
+.wwebjs_auth/
+.wwebjs_cache/
+cookies.txt
+
+# Environment Variables
+.env
+*.env
+
+# Dependencies & Build Files
+node_modules/
+__pycache__/
+*.pyc
+
+# Local Reports & Temporary Output
+reports/latest_report.pdf
+reports/latest_report.png
+scratch/
+/tmp/
+
+# OS Files
+.DS_Store

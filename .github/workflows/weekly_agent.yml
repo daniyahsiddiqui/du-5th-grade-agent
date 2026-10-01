@@ -1,0 +1,37 @@
+name: DU 5th Grade Weekly Agent Run
+
+on:
+  schedule:
+    # Runs every Sunday at 11:00 UTC (7:00 AM EST)
+    - cron: '0 11 * * 0'
+  workflow_dispatch: # Allows 1-click manual trigger from GitHub Actions tab!
+
+jobs:
+  run-weekly-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Weekly Agent & Email Digest
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          SMTP_HOST: "smtp.gmail.com"
+          SMTP_PORT: 587
+        run: |
+          python agent.py --run-now --send-email
+
+      - name: Deploy Live 1-Page Digest to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: success()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
