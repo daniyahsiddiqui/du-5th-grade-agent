@@ -1,0 +1,129 @@
+{
+  "scrape_date": "2026-10-01 01:58",
+  "upcoming_events": [
+    "Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]",
+    "Thursday, Oct 15 – School Improvement, No school for Students",
+    "Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM",
+    "Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students"
+  ],
+  "subjects": {
+    "Language Arts": {
+      "template_type": "ela",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "Module 2 - WHAT A STORY",
+      "writing_tasks": [
+        "Cause and Effect Essay (Final draft due Thursday, October 1)",
+        "Write support sentences for Topic Sentences (at least 6 per paragraph)",
+        "Review Essay Rubric Checklist"
+      ],
+      "ixl_due": "IXL Homework due Sunday 10/4",
+      "ixl_items": [
+        "Create varied sentences based on models",
+        "Choose reasons to support an opinion",
+        "Identify supporting details in informational texts"
+      ],
+      "spelling_words": [
+        "ounce",
+        "sprawl",
+        "launch",
+        "loyal",
+        "avoid",
+        "basketball",
+        "moist",
+        "haunt",
+        "scowl",
+        "naughty",
+        "destroy",
+        "saucer",
+        "pounce",
+        "poison",
+        "August",
+        "auction"
+      ],
+      "tests": []
+    },
+    "Science": {
+      "template_type": "science_ss",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "Module 1: Matter",
+      "video_summary": "Summarize the video: Physical properties of Matter",
+      "ixl_due": "IXL Homework due Sunday 10/4",
+      "ixl_items": [
+        "Identify mixtures",
+        "Understand conservation of matter using graphs",
+        "Compare physical and chemical changes"
+      ],
+      "tests": []
+    },
+    "Social Studies": {
+      "template_type": "science_ss",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "We will continue studying about the first Peoples of America",
+      "video_summary": "Watch video: Every Native American Tribe Explained in 22 minutes - YouTube",
+      "ixl_due": "IXL Homework due Sunday 10/4",
+      "ixl_items": [
+        "Select oceans and continents",
+        "Identify states of the Southeast"
+      ],
+      "tests": []
+    },
+    "Mathematics": {
+      "template_type": "math",
+      "teacher": "Mrs. Hiba Naffakh",
+      "module": "Expressions",
+      "has_deltamath": true,
+      "ixl_codes": [
+        "H-4",
+        "KK-2"
+      ],
+      "tests": []
+    },
+    "Qur'an & Arabic": {
+      "template_type": "quran",
+      "teacher": "Mrs. Iman Luteify",
+      "week": "Q1 Week 8 (Sep 28 - Oct 02)",
+      "main_hifz": "Surah Al-Maarij (Verses 1–5)",
+      "review_surahs": [
+        "Surah Ad-Duha & Al-Inshirah (ASharh)",
+        "Surah Nuh (Verses 1–28)",
+        "Surah At-Teen & Al-Alaq",
+        "Surah Al-Qadr & Al-Bayyina",
+        "Surah Al-Balad",
+        "Surah As-Shams & Al-Layl"
+      ],
+      "friday_recitation": "Surat Al-Kahf (Verses 1–20)",
+      "arabic_unit": "To School! (إلَى المَدرَسَة)",
+      "study_guide": "Complete 50-point Unit Test Study Guide Worksheet",
+      "flashcards": [
+        "1. To School (إلى الْمدرسة)",
+        "2. Numbers (الأعداد)",
+        "3. What time is it? (كم الساعة؟)"
+      ],
+      "tests": [
+        "Surah Al-Maarij (Verses 1–5) Recitation & Hifz Test on Friday"
+      ]
+    },
+    "Islamic Studies": {
+      "template_type": "is",
+      "teacher": "Mrs. Mubeen Fatima",
+      "chapter_topic": "Belief in Angels & Books",
+      "subtopics": [
+        "Size & Appearance",
+        "Powers, Numbers & Names of Angels",
+        "Jobs & Incorrect Beliefs"
+      ],
+      "workbook_task": "Complete Notes and Assignment Worksheet",
+      "presentation_task": "Review Class Presentation on Belief in Angels & Books",
+      "tests": []
+    },
+    "Computers": {
+      "template_type": "computers",
+      "teacher": "Mrs. Mubeen Fatima",
+      "tech_topic": "What is the Cloud / Cloud Computing",
+      "edclub_task": "Complete Digital Citizenship & Digital Literacy (Lessons 229 to 235)",
+      "typing_task": "Daily typing practice on Typing.com",
+      "tests": []
+    }
+  },
+  "week_title": "Quarter 1 Week 8"
+}
