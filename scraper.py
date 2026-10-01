@@ -84,7 +84,34 @@ def clean_lines(lines):
     return cleaned
 
 def find_subpage_link(links, grade_pattern='8th'):
-    """Dynamically picks the latest weekly subpage for the given grade pattern."""
+    """Dynamically picks the latest weekly subpage using calendar-aware date sorting."""
+    MONTH_ORDER = {
+        'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12,
+        'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7
+    }
+
+    def link_date_key(link):
+        """Extract a sortable (month, day) tuple from a URL like week-of-sept-28-oct-2."""
+        ll = link.lower()
+        # Find month names in the URL
+        months_found = []
+        for mon, num in MONTH_ORDER.items():
+            idx = ll.find(mon)
+            if idx != -1:
+                # Try to grab the day number right after the month name
+                after = ll[idx + len(mon):idx + len(mon) + 4].lstrip('-')
+                day_match = re.match(r'(\d+)', after)
+                day = int(day_match.group(1)) if day_match else 0
+                months_found.append((num, day, idx))
+        if months_found:
+            # Pick the last month/day occurrence in URL (the end-of-week date)
+            months_found.sort(key=lambda x: x[2])  # sort by position in URL
+            last = months_found[-1]
+            return (last[0], last[1])
+        # Fallback: look for bare numbers
+        nums = re.findall(r'\d+', ll)
+        return (0, int(nums[-1])) if nums else (0, 0)
+
     sub_links = []
     for link in links:
         link_lower = link.lower()
@@ -95,7 +122,7 @@ def find_subpage_link(links, grade_pattern='8th'):
             ]):
                 sub_links.append(link)
     if sub_links:
-        sub_links.sort(reverse=True)
+        sub_links.sort(key=link_date_key, reverse=True)
         return sub_links[0]
     return None
 
@@ -174,19 +201,32 @@ def parse_all_subjects():
         clean_events = ["No explicit upcoming school events posted for this week."]
     extracted['upcoming_events'] = clean_events
 
-    # Science: from the homeroom weekly subpage — filter to homework/quiz/IXL only
+    # Science: from the homeroom weekly subpage — filter to tests, IXL, study guide, HW
     sci_clean = clean_lines(science_lines)
     sci_tasks = []
     sci_tests = []
     sci_module = "Science"
 
+    sci_skip = {'Objectives:', 'Objectives'}
     for line in sci_clean:
+        if line in sci_skip:
+            continue
+        if re.match(r'^Week of', line, re.IGNORECASE):
+            continue
+        # Module name: "Unit N, L.N. Topic" — but only if it's not a test/quiz line itself
         if re.match(r'^Unit\s+\d+', line, re.IGNORECASE) and len(line) < 100:
-            sci_module = line
-        if any(kw in line.lower() for kw in ['quiz', 'test', 'exam', 'assessment']) and len(line) < 150:
+            if 'test' not in line.lower() and 'quiz' not in line.lower():
+                sci_module = line
+            # Still check if it's a test line below
+        # Tests / quizzes — but NOT "review" lines (those are tasks)
+        if any(kw in line.lower() for kw in ['quiz', 'exam', 'assessment']) and 'review' not in line.lower() and len(line) < 150:
             if line not in sci_tests:
                 sci_tests.append(line)
-        elif any(kw in line.lower() for kw in ['h.w', 'homework', 'ixl ', 'study guide', 'workbook', 'pages']) and len(line) < 150:
+        elif 'test' in line.lower() and 'review' not in line.lower() and len(line) < 150:
+            if line not in sci_tests:
+                sci_tests.append(line)
+        # Review, homework, IXL, study guide, blooket, workbook → tasks
+        elif any(kw in line.lower() for kw in ['review', 'h.w', 'homework', 'ixl', 'study guide', 'workbook', 'blooket', 'pages', 'grow day']) and len(line) < 150:
             if line not in sci_tasks:
                 sci_tasks.append(line)
 
@@ -194,7 +234,7 @@ def parse_all_subjects():
         sci_tasks = ["No explicit Science homework posted for this week."]
 
     extracted['subjects']['Science'] = {
-        'teacher': 'Science Teacher',
+        'teacher': 'Mrs. Maoued',
         'module': sci_module,
         'tasks': sci_tasks,
         'tests': sci_tests
