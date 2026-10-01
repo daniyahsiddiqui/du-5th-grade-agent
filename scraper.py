@@ -279,81 +279,90 @@ def parse_all_subjects():
             ela_week_title = f"Week {week_num} — {' '.join(date_parts)}".strip(' —')
             break
 
-    # Now rebuild clean day-by-day tasks from the week block
-    # The pattern is: day name → Reading + content → Writing + content → Homework lines
+    # Only collect: Homework, IXL skills, due dates, quizzes, tests, projects
+    # Discard: day-by-day Reading/Writing classwork schedule
     ela_tasks = []
     ela_tests = []
-    current_day = None
     day_names = {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'}
 
     i = 0
     while i < len(ela_week):
         line = ela_week[i]
 
-        if line in day_names:
-            current_day = line
+        # Skip day labels, bare separators, and fragmented week header pieces
+        if line in day_names or line in (':', 'Reading', 'Writing', 'Week', 'Quarter 1'):
             i += 1
             continue
 
-        # Single ':'  — separator fragment, skip
-        if line == ':':
+        # Skip bare book title / short page-range fragments (non-actionable)
+        if line in ('A Monster Calls',) or re.match(r'^\(.*\)$', line) or re.match(r'^".*"$', line):
             i += 1
             continue
 
-        # "Reading" or "Writing" label: merge with next content line
-        if line in ('Reading', 'Writing') and i + 1 < len(ela_week):
-            next_line = ela_week[i + 1]
-            if next_line == ':' and i + 2 < len(ela_week):
-                content = ela_week[i + 2]
-                i += 3
-            elif next_line.startswith(':'):
-                content = next_line[1:].strip()
-                i += 2
-            else:
-                content = next_line
-                i += 2
-            if content and content not in (':', ''):
-                entry = f"{current_day} — {line}: {content}" if current_day else f"{line}: {content}"
-                ela_tasks.append(entry)
-            continue
-
-        # Homework lines
+        # ── Homework lines ──
         if line.lower().startswith('homework:') or line.lower().startswith('h.w'):
-            ela_tasks.append(line)
-            i += 1
-            continue
-
-        # Classwork lines (keep only if they have substance)
-        if line.lower().startswith('classwork:') and len(line) > 15:
-            ela_tasks.append(line)
-            i += 1
-            continue
-
-        # IXL skill lines
-        if 'ixl skill' in line.lower() or 'ixl skills' in line.lower():
-            # Merge with next if it's a continuation
+            # Grab continuation lines (e.g. "share with Ms. Carman by 11:59pm" / due dates)
             task = line
-            if i + 1 < len(ela_week) and not ela_week[i + 1] in day_names and len(ela_week[i + 1]) < 60:
-                task += ' ' + ela_week[i + 1]
-                i += 1
-            ela_tasks.append(task)
+            if i + 1 < len(ela_week) and ela_week[i + 1] not in day_names and ela_week[i + 1] not in ('Reading', 'Writing') and len(ela_week[i + 1]) < 80:
+                nxt = ela_week[i + 1]
+                if nxt.startswith('(') or 'due' in nxt.lower() or 'share' in nxt.lower() or 'pm' in nxt.lower():
+                    task += ' ' + nxt.strip('()')
+                    i += 1
+            if task not in ela_tasks:
+                ela_tasks.append(task)
             i += 1
             continue
 
-        # Test/quiz lines
-        if any(kw in line.lower() for kw in ['vocab quiz', 'comprehension check', 'map testing']) and len(line) < 120:
-            ela_tests.append(line)
+        # ── IXL skill assignments ──
+        if 'ixl skill' in line.lower() or 'ixl skills' in line.lower():
+            task = line
+            # Merge continuation (skill code / due date on next line)
+            if i + 1 < len(ela_week) and ela_week[i + 1] not in day_names and len(ela_week[i + 1]) < 60:
+                nxt = ela_week[i + 1]
+                if 'due' in nxt.lower() or re.match(r'^\(', nxt):
+                    task += ' ' + nxt.strip('()')
+                    i += 1
+            if task not in ela_tasks:
+                ela_tasks.append(task)
+            i += 1
+            continue
+
+        # ── Due date callouts (e.g. "Final draft due next Tuesday (9/29)") ──
+        if 'due' in line.lower() and len(line) < 100 and not line.lower().startswith('homework:'):
+            if line not in ela_tasks:
+                ela_tasks.append(line)
+            i += 1
+            continue
+
+        # ── Quizzes and tests ──
+        if any(kw in line.lower() for kw in ['vocab quiz', 'vocabulary quiz', 'map testing']) and len(line) < 150:
+            if line not in ela_tests:
+                ela_tests.append(line)
+            i += 1
+            continue
+
+        # Comprehension check → classwork task
+        if 'comprehension check' in line.lower() and len(line) < 150:
+            if line not in ela_tasks:
+                ela_tasks.append(line)
+            i += 1
+            continue
+
+        # ── Figurative language project link (actionable callout at top of page) ──
+        if 'figurative language' in line.lower() and 'approval' in line.lower():
+            if line not in ela_tasks:
+                ela_tasks.append(line)
             i += 1
             continue
 
         i += 1
 
-    # Remove duplicate entries
+    # Deduplicate
     ela_tasks = list(dict.fromkeys(ela_tasks))
     ela_tests = list(dict.fromkeys(ela_tests))
 
-    if not ela_tasks:
-        ela_tasks = ["No explicit Language Arts assignments posted for this week."]
+    if not ela_tasks and not ela_tests:
+        ela_tasks = ["No explicit Language Arts homework or deadlines posted for this week."]
 
     extracted['subjects']['Language Arts'] = {
         'teacher': 'Mrs. Stewart / Ms. Carman',

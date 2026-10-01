@@ -1,39 +1,36 @@
 {
-  "scrape_date": "2026-10-01 00:07",
+  "scrape_date": "2026-10-01 00:35",
   "upcoming_events": [
     "PTO Family Picnic [1:45PM-4:45PM]"
   ],
   "subjects": {
     "Science": {
-      "teacher": "Science Teacher",
-      "module": "Unit 1, L.3. Transforming Potential Energy.",
+      "teacher": "Mrs. Maoued",
+      "module": "Science",
       "tasks": [
-        "Workbook P. 44-4",
-        "IXL  J.4"
+        "Start test review.",
+        "Study Guide",
+        "Blooket Practice",
+        "Unit test review.",
+        "IXL  Conduction, Convection, Radiation",
+        "Grow day."
       ],
       "tests": [
-        "Lesson 3 performance assessment."
+        "Unit 2, L.2 quiz.",
+        "Unit 2 test."
       ]
     },
     "Language Arts": {
       "teacher": "Mrs. Stewart / Ms. Carman",
       "module": "Week 8 — September 28 - October 2",
       "tasks": [
-        "Monday — Reading: Continue reading",
-        "Monday — Writing: \"Judge a Book By Its Cover\" - Creating a binding for your narrative",
-        "Tuesday — Reading: A Monster Calls",
-        "Tuesday — Writing: Vocabulary for",
-        "Homework: Finish and Submit Final Draft",
-        "Wednesday — Reading: A Monster Calls",
-        "Wednesday — Writing: Binding your narratives",
-        "Thursday — Reading: A Monster Calls",
-        "Classwork: Comprehension Check of",
-        "Thursday — Writing: Sharing Narratives",
-        "Friday — Reading: A Monster Calls",
-        "Classwork: Vocabulary Quiz",
-        "Friday — Writing: Sharing Narratives"
+        "Link to Figurative Language Examples! (You MUST get Ms. Carman's approval of your phrase to earn credit!)",
+        "Homework: Finish and Submit Final Draft share with Ms. Carman by 11:59pm",
+        "Classwork: Comprehension Check of"
       ],
-      "tests": []
+      "tests": [
+        "Classwork: Vocabulary Quiz"
+      ]
     },
     "US History II": {
       "teacher": "Ms. Anderson",
