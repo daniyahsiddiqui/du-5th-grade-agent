@@ -97,13 +97,13 @@ def run_agent(send_email=False, print_to_stdout=False):
     attachment_to_send = latest_pdf_path if os.path.exists(latest_pdf_path) else latest_html_path
     print(f"[3/3] Handling email delivery (attaching '{os.path.basename(attachment_to_send)}')...")
     if send_email:
-        subject = f"📋 DU 5th Grade Weekly Digest & Checklist ({scraped_data.get('scrape_date', date_stamp)})"
+        subject = f"📋 DU 8th Grade Weekly Digest & Checklist ({scraped_data.get('scrape_date', date_stamp)})"
         success, msg = send_weekly_email(subject, html_report, md_report, attachment_path=attachment_to_send)
         print(f"Email Dispatch Result: {msg}")
     else:
         cfg = load_config()
         if cfg.get("sender_email") and cfg.get("recipient_email"):
-            subject = f"📋 DU 5th Grade Weekly Digest & Checklist ({scraped_data.get('scrape_date', date_stamp)})"
+            subject = f"📋 DU 8th Grade Weekly Digest & Checklist ({scraped_data.get('scrape_date', date_stamp)})"
             success, msg = send_weekly_email(subject, html_report, md_report, attachment_path=attachment_to_send)
         else:
             print("[INFO] Email credentials not configured in config.json. Report saved locally.")
@@ -112,7 +112,7 @@ def run_agent(send_email=False, print_to_stdout=False):
     return html_path, md_path
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="DU 5th Grade Weekly Agent")
+    parser = argparse.ArgumentParser(description="DU 8th Grade Weekly Agent")
     parser.add_argument('--run-now', action='store_true', help="Run scraper and generate reports now")
     parser.add_argument('--send-email', action='store_true', help="Force sending email digest")
     parser.add_argument('--print-report', action='store_true', help="Print markdown report to terminal")
