@@ -41,12 +41,12 @@ def generate_pdf_from_html(html_path, pdf_path):
 
 def run_agent(send_email=False, print_to_stdout=False):
     print("=" * 60)
-    print("🤖 Starting DU 5th Grade Weekly Agent Run...")
+    print("🤖 Starting DU 8th Grade Weekly Agent Run...")
     print(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
 
     # 1. Scrape Live Site
-    print("[1/3] Scraping DU 5th Grade Google Sites network...")
+    print("[1/3] Scraping DU 8th Grade Google Sites network...")
     scraped_data = parse_all_subjects()
 
     # 2. Build Reports

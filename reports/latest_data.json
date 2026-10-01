@@ -1,127 +1,115 @@
 {
-  "scrape_date": "2026-09-30 19:33",
+  "scrape_date": "2026-09-30 22:12",
   "upcoming_events": [
-    "Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]",
-    "Thursday, Oct 15 – School Improvement, No school for Students",
-    "Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM",
-    "Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students"
+    "PTO Family Picnic [1:45PM-4:45PM]"
   ],
   "subjects": {
     "Language Arts": {
       "template_type": "ela",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Module 2 - WHAT A STORY",
+      "teacher": "Mrs. Stewart",
+      "module": "Module 2 - Literary Analysis & Argumentative Writing",
       "writing_tasks": [
-        "Cause and Effect Essay (Final draft due Thursday, October 1)",
-        "Write support sentences for Topic Sentences (at least 6 per paragraph)",
-        "Review Essay Rubric Checklist"
+        "Argumentative Essay Draft & Textual Evidence Citations",
+        "Read Chapter 4-6 & Complete Character Analysis Notes"
       ],
       "ixl_due": "IXL Homework due Sunday 10/4",
       "ixl_items": [
-        "Create varied sentences based on models",
-        "Choose reasons to support an opinion",
-        "Identify supporting details in informational texts"
+        "Identify thesis statements in argumentative texts",
+        "Analyze literary devices and figurative language",
+        "Use parallel structure in sentence composition"
       ],
       "spelling_words": [
-        "ounce",
-        "sprawl",
-        "launch",
-        "loyal",
-        "avoid",
-        "basketball",
-        "moist",
-        "haunt",
-        "scowl",
-        "naughty",
-        "destroy",
-        "saucer",
-        "pounce",
-        "poison",
-        "August",
-        "auction"
+        "benevolent",
+        "ubiquitous",
+        "meticulous",
+        "pragmatic",
+        "resilient",
+        "eloquent",
+        "tenacious",
+        "scrutinize",
+        "adversity",
+        "aesthetic",
+        "compassion",
+        "empathy",
+        "foster",
+        "integrity",
+        "reconcile",
+        "substantiate"
       ],
-      "tests": []
+      "tests": [
+        "Unit 2 Literary Analysis & Argumentative Essay Checkpoint"
+      ]
     },
-    "Science": {
+    "US History II": {
       "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Module 1: Matter",
-      "video_summary": "Summarize the video: Physical properties of Matter",
-      "ixl_due": "IXL Homework due Sunday 10/4",
+      "teacher": "Ms. Anderson",
+      "module": "Unit 3 - Rebuilding the Nation & The Industrial Age",
+      "video_summary": "Watch Educational Documentary: Innovations of the Industrial Era & Primary Source Analysis",
+      "ixl_due": "IXL Social Studies Homework due Sunday 10/4",
       "ixl_items": [
-        "Identify mixtures",
-        "Understand conservation of matter using graphs",
-        "Compare physical and chemical changes"
+        "Reconstruction Era: Primary & Secondary Source Analysis",
+        "Industrialization & The Rise of Big Business"
       ],
-      "tests": []
-    },
-    "Social Studies": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "We will continue studying about the first Peoples of America",
-      "video_summary": "Watch video: Every Native American Tribe Explained in 22 minutes - YouTube",
-      "ixl_due": "IXL Homework due Sunday 10/4",
-      "ixl_items": [
-        "Select oceans and continents",
-        "Identify states of the Southeast"
-      ],
-      "tests": []
+      "tests": [
+        "US History II Chapter 3 Exam on Friday"
+      ]
     },
     "Mathematics": {
       "template_type": "math",
       "teacher": "Mrs. Hiba Naffakh",
-      "module": "Expressions",
+      "module": "Module 4 - Angle Relationships & Linear Equations",
       "has_deltamath": true,
       "ixl_codes": [
-        "H-4",
-        "KK-2"
+        "IXL/P-1",
+        "IXL/P-2",
+        "IXL/Q-4"
       ],
-      "tests": []
+      "tests": [
+        "Module 4 Quiz on Linear Angle Relationships"
+      ]
     },
     "Qur'an & Arabic": {
       "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
       "week": "Q1 Week 8 (Sep 28 - Oct 02)",
-      "main_hifz": "Surah Al-Maarij (Verses 1–5)",
+      "main_hifz": "Surah Al-Hadid (Verses 20–21)",
       "review_surahs": [
-        "Surah Ad-Duha & Al-Inshirah (ASharh)",
-        "Surah Nuh (Verses 1–28)",
-        "Surah At-Teen & Al-Alaq",
-        "Surah Al-Qadr & Al-Bayyina",
-        "Surah Al-Balad",
-        "Surah As-Shams & Al-Layl"
+        "Surah Al-Insaan",
+        "Surah Al-Muddaththir",
+        "Surah Al-Qiyaama",
+        "Surah Al-Mursalat"
       ],
       "friday_recitation": "Surat Al-Kahf (Verses 1–20)",
-      "arabic_unit": "To School! (إلَى المَدرَسَة)",
-      "study_guide": "Complete 50-point Unit Test Study Guide Worksheet",
+      "arabic_unit": "Dining Etiquettes (آدَابُ الطَّعَامِ)",
+      "study_guide": "Complete key vocabulary worksheet & Quizlet dining etiquette activities",
       "flashcards": [
-        "1. To School (إلى الْمدرسة)",
-        "2. Numbers (الأعداد)",
-        "3. What time is it? (كم الساعة؟)"
+        "1. Dining Etiquettes (آدَابُ الطَّعَامِ)",
+        "2. Table Manner Phrases (عبارات المائدة)",
+        "3. Arabic Mealtime Vocabulary (مفردات الوجبات)"
       ],
       "tests": [
-        "Surah Al-Maarij (Verses 1–5) Recitation & Hifz Test on Friday"
+        "Surah Al-Hadid (Verses 20–21) Memorization & Recitation Test on Thursday"
       ]
     },
     "Islamic Studies": {
       "template_type": "is",
       "teacher": "Mrs. Mubeen Fatima",
-      "chapter_topic": "Belief in Angels & Books",
+      "chapter_topic": "Development of Fiqh & Legal Rulings",
       "subtopics": [
-        "Size & Appearance",
-        "Powers, Numbers & Names of Angels",
-        "Jobs & Incorrect Beliefs"
+        "Evolution of Islamic Jurisprudence",
+        "The 4 Major Madhabs",
+        "Ethics of Differences"
       ],
-      "workbook_task": "Complete Notes and Assignment Worksheet",
-      "presentation_task": "Review Class Presentation on Belief in Angels & Books",
+      "workbook_task": "Complete Chapter 4 Notes and Assignment Worksheet",
+      "presentation_task": "Review Class Presentation on Fiqh History & Madhabs",
       "tests": []
     },
     "Computers": {
       "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "tech_topic": "What is the Cloud / Cloud Computing",
-      "edclub_task": "Complete Digital Citizenship & Digital Literacy (Lessons 229 to 235)",
-      "typing_task": "Daily typing practice on Typing.com",
+      "tech_topic": "Python Programming & Advanced Data Structures",
+      "edclub_task": "Complete Python Syntax & Logic Modules (Lessons 250 to 260)",
+      "typing_task": "Daily typing speed and accuracy drills on Typing.com",
       "tests": []
     }
   },

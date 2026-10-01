@@ -11,9 +11,9 @@ def generate_markdown_report(data):
         week_title = week_title.replace("Q2", "Quarter 2")
     
     md = []
-    md.append(f"# 📋 DU 5th Grade Weekly Homework Digest & Student Checklist")
+    md.append(f"# 📋 DU 8th Grade Weekly Homework Digest & Student Checklist")
     md.append(f"## 🗓️ {week_title}")
-    md.append(f"**Report Date:** {date_str} | **Grade:** 5th Grade\n")
+    md.append(f"**Report Date:** {date_str} | **Grade:** 8th Grade\n")
     
     # 1. High Priority Tests & Deadlines
     md.append("## 🚨 Upcoming Tests & High Priority Deadlines")
@@ -149,7 +149,7 @@ def generate_html_report(data):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DU 5th Grade Weekly Digest & Checklist</title>
+    <title>DU 8th Grade Weekly Digest & Checklist</title>
     <style>
         body {{
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
@@ -260,7 +260,7 @@ def generate_html_report(data):
         <div class="header">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
-                    <h1>📋 DU 5th Grade Weekly Digest & Student Checklist</h1>
+                    <h1>📋 DU 8th Grade Weekly Digest & Student Checklist</h1>
                     <div class="week-badge">🗓️ {week_title}</div>
                     <div class="meta"><strong>Report Date:</strong> {date_str} | Weekly Homework & Test Tracker</div>
                 </div>

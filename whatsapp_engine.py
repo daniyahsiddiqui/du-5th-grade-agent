@@ -40,7 +40,7 @@ def format_due_tomorrow(data):
     tomorrow_day_name = tomorrow.strftime("%A")
     tomorrow_str = tomorrow.strftime("%m/%d")
 
-    res = [f"📅 *DU 5th Grade - What's Due Tomorrow ({tomorrow_day_name}, {tomorrow_str})*:\n"]
+    res = [f"📅 *DU 8th Grade - What's Due Tomorrow ({tomorrow_day_name}, {tomorrow_str})*:\n"]
     
     subjects = data.get('subjects', {})
     found_any = False
@@ -180,9 +180,9 @@ def format_quran_summary(data):
 def format_spelling_summary(data):
     spelling = data.get('subjects', {}).get('Language Arts', {}).get('spelling_words', [])
     if not spelling:
-        return "ℹ️ Spelling word list not available for this week."
+        return "ℹ️ Vocabulary/Spelling word list not available for this week."
     
-    res = [f"📖 *DU 5th Grade - Weekly Spelling Words ({len(spelling)} words)*:\n"]
+    res = [f"📖 *DU 8th Grade - Weekly Vocabulary Words ({len(spelling)} words)*:\n"]
     for i, word in enumerate(spelling, 1):
         res.append(f"{i}. {word}")
     
@@ -191,7 +191,7 @@ def format_spelling_summary(data):
 def format_all_summary(data):
     date_str = data.get('scrape_date', datetime.now().strftime('%Y-%m-%d'))
     week_title = data.get('week_title') or "Quarter 1 Week 8"
-    res = [f"📋 *DU 5th Grade Weekly Overview — {week_title} ({date_str})*\n"]
+    res = [f"📋 *DU 8th Grade Weekly Overview — {week_title} ({date_str})*\n"]
 
     # Quick tests
     res.append(format_upcoming_tests(data))
@@ -204,7 +204,7 @@ def format_all_summary(data):
     
     return "\n".join(res)
 
-BOT_HEADER = "🤖 *DU 5th Grade WhatsApp Bot*"
+BOT_HEADER = "🤖 *DU 8th Grade WhatsApp Bot*"
 
 def process_whatsapp_query(user_query, json_path=None):
     data = load_latest_data(json_path)
