@@ -58,3 +58,4 @@ Scan the terminal QR code with your WhatsApp phone under **Linked Devices**.
 | `!ixl` | Lists assigned IXL skill codes and due dates |
 | `!spelling` | Displays current weekly spelling list |
 | `!all` / `!report` | Delivers complete weekly overview digest |
+# du-5th-grade-agent
