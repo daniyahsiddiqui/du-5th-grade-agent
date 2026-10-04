@@ -1,7 +1,8 @@
 {
-  "scrape_date": "2026-10-01 14:28",
+  "scrape_date": "2026-10-04 15:33",
   "upcoming_events": [
     "Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]",
+    "Monday, Oct 5, 2026 – Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)",
     "Thursday, Oct 15 – School Improvement, No school for Students",
     "Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM",
     "Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students"
@@ -12,11 +13,9 @@
       "teacher": "Mrs. Tasneim Khalifa",
       "module": "Module 2 - WHAT A STORY",
       "writing_tasks": [
-        "Cause and Effect Essay (Final draft due Thursday, October 1)",
-        "Write support sentences for Topic Sentences (at least 6 per paragraph)",
-        "Review Essay Rubric Checklist"
+        "Cause and Effect Essay (Final draft due Thursday, October 1)"
       ],
-      "ixl_due": "IXL Homework due Sunday 10/4",
+      "ixl_due": "IXL Homework due Sunday 10/11",
       "ixl_items": [
         "Create varied sentences based on models",
         "Choose reasons to support an opinion",
@@ -46,35 +45,32 @@
       "template_type": "science_ss",
       "teacher": "Mrs. Tasneim Khalifa",
       "module": "Module 1: Matter",
-      "video_summary": "Summarize the video: Physical properties of Matter",
-      "ixl_due": "IXL Homework due Sunday 10/4",
-      "ixl_items": [
-        "Identify mixtures",
-        "Understand conservation of matter using graphs",
-        "Compare physical and chemical changes"
-      ],
-      "tests": []
+      "video_summary": "",
+      "ixl_due": "",
+      "ixl_items": [],
+      "tests": [
+        "MODULE 1 TEST on WEDNESDAY 10/7"
+      ]
     },
     "Social Studies": {
       "template_type": "science_ss",
       "teacher": "Mrs. Tasneim Khalifa",
       "module": "We will continue studying about the first Peoples of America",
       "video_summary": "Watch video: Every Native American Tribe Explained in 22 minutes - YouTube",
-      "ixl_due": "IXL Homework due Sunday 10/4",
+      "ixl_due": "IXL Homework due Sunday 10/11",
       "ixl_items": [
-        "Select oceans and continents",
-        "Identify states of the Southeast"
+        "Identify states of the Northeast"
       ],
       "tests": []
     },
     "Mathematics": {
       "template_type": "math",
       "teacher": "Mrs. Hiba Naffakh",
-      "module": "Expressions",
+      "module": "Module 5",
       "has_deltamath": true,
       "ixl_codes": [
-        "H-4",
-        "KK-2"
+        "NN-8",
+        "UU-1"
       ],
       "tests": []
     },
