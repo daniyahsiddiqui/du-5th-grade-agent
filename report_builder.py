@@ -4,7 +4,7 @@ from datetime import datetime
 
 def generate_markdown_report(data):
     date_str = data.get('scrape_date', datetime.now().strftime('%Y-%m-%d'))
-    week_title = data.get('week_title') or data.get('subjects', {}).get("Qur'an & Arabic", {}).get('week') or "Quarter 1 Week 8"
+    week_title = data.get('week_title') or data.get('subjects', {}).get("Qur'an & Arabic", {}).get('week') or "This Week"
     if week_title.startswith("Q1"):
         week_title = week_title.replace("Q1", "Quarter 1")
     elif week_title.startswith("Q2"):
@@ -38,13 +38,15 @@ def generate_markdown_report(data):
         ela = subjects['Language Arts']
         md.append(f"### Language Arts *(Teacher: {ela['teacher']})*")
         md.append(f"**Current Unit/Module:** {ela['module']}")
-        for task in ela['writing_tasks']:
+        for task in ela.get('writing_tasks', []):
             md.append(f"- [ ] 📝 {task}")
         if ela.get('ixl_items'):
             due_str = f" ({ela['ixl_due']})" if ela.get('ixl_due') else ""
             md.append(f"- [ ] 🎯 **[IXL Homework - {len(ela['ixl_items'])} IXL(s) Assigned{due_str}]**")
             for ixl in ela['ixl_items']:
                 md.append(f"  - [ ] 🎯 **[IXL]** {ixl}")
+        elif ela.get('ixl_due'):
+            md.append(f"- ℹ️ {ela['ixl_due']}")
         md.append("")
 
     # --- 2. SCIENCE & SOCIAL STUDIES ---
@@ -53,13 +55,17 @@ def generate_markdown_report(data):
             s_data = subjects[s_name]
             md.append(f"### {s_name} *(Teacher: {s_data['teacher']})*")
             md.append(f"**Current Unit/Module:** {s_data['module']}")
-            if s_data['video_summary']:
+            for task in s_data.get('tasks', []):
+                md.append(f"- [ ] 📝 {task}")
+            if s_data.get('video_summary'):
                 md.append(f"- [ ] 🎬 {s_data['video_summary']}")
-            if s_data['ixl_items']:
-                due_str = f" ({s_data['ixl_due']})" if s_data['ixl_due'] else ""
+            if s_data.get('ixl_items'):
+                due_str = f" ({s_data['ixl_due']})" if s_data.get('ixl_due') else ""
                 md.append(f"- [ ] 🎯 **[IXL Homework - {len(s_data['ixl_items'])} IXL(s) Assigned{due_str}]**")
                 for ixl in s_data['ixl_items']:
                     md.append(f"  - [ ] 🎯 **[IXL]** {ixl}")
+            elif s_data.get('ixl_due'):
+                md.append(f"- ℹ️ {s_data['ixl_due']}")
             md.append("")
 
     # --- 3. MATHEMATICS ---
@@ -67,9 +73,9 @@ def generate_markdown_report(data):
         m_data = subjects['Mathematics']
         md.append(f"### Mathematics *(Teacher: {m_data['teacher']})*")
         md.append(f"**Current Unit/Module:** {m_data['module']}")
-        if m_data['has_deltamath']:
+        if m_data.get('has_deltamath'):
             md.append("- [ ] 📐 **[DeltaMath Assignment]** Complete online DeltaMath module")
-        if m_data['ixl_codes']:
+        if m_data.get('ixl_codes'):
             md.append(f"- [ ] 🎯 **[IXL Homework - {len(m_data['ixl_codes'])} Skill(s) Assigned]**")
             for code in m_data['ixl_codes']:
                 md.append(f"  - [ ] 🎯 **[IXL Skill Code]** {code}")
@@ -79,31 +85,41 @@ def generate_markdown_report(data):
     if "Qur'an & Arabic" in subjects:
         q_data = subjects["Qur'an & Arabic"]
         md.append(f"### Qur'an & Arabic *(Teacher: {q_data['teacher']})*")
-        md.append(f"**Active Week:** {q_data['week']}")
+        if q_data.get('week'):
+            md.append(f"**Active Week:** {q_data['week']}")
         md.append("**📖 Qur'an (Hifz & Recitation):**")
-        md.append(f"- [ ] 🎯 **Main Hifz Assignment:** {q_data['main_hifz']}")
-        if q_data['review_surahs']:
+        if q_data.get('main_hifz'):
+            md.append(f"- [ ] 🎯 **Main Hifz Assignment:** {q_data['main_hifz']}")
+        if q_data.get('review_surahs'):
             md.append(f"- [ ] 📖 **Weekly Review Surahs:** {', '.join(q_data['review_surahs'])}")
-        md.append(f"- [ ] 🕌 **Friday Surah Practice:** {q_data['friday_recitation']}")
+        if q_data.get('friday_recitation'):
+            md.append(f"- [ ] 🕌 **Friday Surah Practice:** {q_data['friday_recitation']}")
         
-        md.append("**📝 Arabic Class:**")
-        md.append(f"- [ ] 📚 **Unit Title:** {q_data['arabic_unit']}")
-        md.append(f"- [ ] 📝 **Study Guide:** {q_data['study_guide']}")
-        if q_data['flashcards']:
-            md.append(f"- [ ] 🎴 **Quizlet & Wordwall Flashcard Review:**")
-            for fc in q_data['flashcards']:
-                md.append(f"  - [ ] {fc}")
+        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('flashcards'):
+            md.append("**📝 Arabic Class:**")
+            if q_data.get('arabic_unit'):
+                md.append(f"- [ ] 📚 **Unit Title:** {q_data['arabic_unit']}")
+            if q_data.get('study_guide'):
+                md.append(f"- [ ] 📝 **Homework:** {q_data['study_guide']}")
+            if q_data.get('flashcards'):
+                md.append(f"- [ ] 🎴 **Quizlet & Wordwall Flashcard Review:**")
+                for fc in q_data['flashcards']:
+                    md.append(f"  - [ ] {fc}")
         md.append("")
 
     # --- 5. ISLAMIC STUDIES ---
     if 'Islamic Studies' in subjects:
         is_data = subjects['Islamic Studies']
         md.append(f"### Islamic Studies *(Teacher: {is_data['teacher']})*")
-        md.append(f"**Chapter Topic:** {is_data['chapter_topic']}")
-        if is_data['subtopics']:
+        if is_data.get('chapter_topic'):
+            md.append(f"**Chapter Topic:** {is_data['chapter_topic']}")
+        if is_data.get('subtopics'):
             md.append(f"**Lesson Coverage:** {', '.join(is_data['subtopics'])}")
-        md.append(f"- [ ] 📝 {is_data['workbook_task']}")
-        if is_data['presentation_task']:
+        for task in is_data.get('tasks', []):
+            md.append(f"- [ ] 📝 {task}")
+        if is_data.get('workbook_task'):
+            md.append(f"- [ ] 📝 {is_data['workbook_task']}")
+        if is_data.get('presentation_task'):
             md.append(f"- [ ] 💻 {is_data['presentation_task']}")
         md.append("")
 
@@ -111,9 +127,12 @@ def generate_markdown_report(data):
     if 'Computers' in subjects:
         c_data = subjects['Computers']
         md.append(f"### Computers *(Teacher: {c_data['teacher']})*")
-        md.append(f"**Tech Unit:** {c_data['tech_topic']}")
-        md.append(f"- [ ] 💻 {c_data['edclub_task']}")
-        md.append(f"- [ ] ⌨️ {c_data['typing_task']}")
+        if c_data.get('tech_topic'):
+            md.append(f"**Tech Unit:** {c_data['tech_topic']}")
+        if c_data.get('edclub_task'):
+            md.append(f"- [ ] 💻 {c_data['edclub_task']}")
+        if c_data.get('typing_task'):
+            md.append(f"- [ ] ⌨️ {c_data['typing_task']}")
         md.append("")
 
     # 3. Spelling Words Section
@@ -136,7 +155,7 @@ def generate_markdown_report(data):
 
 def generate_html_report(data):
     date_str = data.get('scrape_date', datetime.now().strftime('%Y-%m-%d'))
-    week_title = data.get('week_title') or data.get('subjects', {}).get("Qur'an & Arabic", {}).get('week') or "Quarter 1 Week 8"
+    week_title = data.get('week_title') or data.get('subjects', {}).get("Qur'an & Arabic", {}).get('week') or "This Week"
     if week_title.startswith("Q1"):
         week_title = week_title.replace("Q1", "Quarter 1")
     elif week_title.startswith("Q2"):
@@ -306,7 +325,7 @@ def generate_html_report(data):
             <div class="topic-tag">Unit/Module: {ela['module']}</div>
             <ul class="task-list">
 """
-        for task in ela['writing_tasks']:
+        for task in ela.get('writing_tasks', []):
             html += f'<li class="task-item"><input type="checkbox"><div>📝 <strong>{task}</strong></div></li>'
         if ela.get('ixl_items'):
             due_str = f" ({ela['ixl_due']})" if ela.get('ixl_due') else ""
@@ -320,6 +339,8 @@ def generate_html_report(data):
             for ixl in ela['ixl_items']:
                 html += f'<li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> {ixl}</div></li>'
             html += '</ul>'
+        elif ela.get('ixl_due'):
+            html += f'<li class="task-item"><div>ℹ️ {ela["ixl_due"]}</div></li>'
         html += "</ul></div>"
 
     # --- 2. SCIENCE & SOCIAL STUDIES ---
@@ -335,10 +356,12 @@ def generate_html_report(data):
                 <div class="topic-tag">Module: {s_data['module']}</div>
                 <ul class="task-list">
 """
-            if s_data['video_summary']:
+            for task in s_data.get('tasks', []):
+                html += f'<li class="task-item"><input type="checkbox"><div>📝 {task}</div></li>'
+            if s_data.get('video_summary'):
                 html += f'<li class="task-item"><input type="checkbox"><div>🎬 {s_data["video_summary"]}</div></li>'
-            if s_data['ixl_items']:
-                due_str = f" ({s_data['ixl_due']})" if s_data['ixl_due'] else ""
+            if s_data.get('ixl_items'):
+                due_str = f" ({s_data['ixl_due']})" if s_data.get('ixl_due') else ""
                 html += f'''
                     <li class="task-item">
                         <input type="checkbox">
@@ -349,6 +372,8 @@ def generate_html_report(data):
                 for ixl in s_data['ixl_items']:
                     html += f'<li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> {ixl}</div></li>'
                 html += '</ul>'
+            elif s_data.get('ixl_due'):
+                html += f'<li class="task-item"><div>ℹ️ {s_data["ixl_due"]}</div></li>'
             html += "</ul></div>"
 
     # --- 3. MATHEMATICS ---
@@ -363,9 +388,9 @@ def generate_html_report(data):
             <div class="topic-tag">Module: {m_data['module']}</div>
             <ul class="task-list">
 """
-        if m_data['has_deltamath']:
+        if m_data.get('has_deltamath'):
             html += '<li class="task-item"><input type="checkbox"><div><span class="deltamath-badge">📐 DeltaMath</span> Complete online DeltaMath assignment</div></li>'
-        if m_data['ixl_codes']:
+        if m_data.get('ixl_codes'):
             html += f'''
                 <li class="task-item">
                     <input type="checkbox">
@@ -387,27 +412,38 @@ def generate_html_report(data):
                 <span class="subject-name">Qur'an & Arabic</span>
                 <span class="teacher-name">{q_data['teacher']}</span>
             </div>
-            <div class="topic-tag">Active Week: {q_data['week']}</div>
+"""
+        if q_data.get('week'):
+            html += f'<div class="topic-tag">Active Week: {q_data["week"]}</div>'
+        html += """
             <div style="font-weight: 700; color: #0f172a; margin-top: 8px; margin-bottom: 4px;">📖 Qur'an (Hifz & Recitation):</div>
             <ul class="task-list">
-                <li class="task-item"><input type="checkbox"><div>🎯 <strong>Main Hifz Assignment:</strong> {q_data['main_hifz']}</div></li>
 """
-        if q_data['review_surahs']:
+        if q_data.get('main_hifz'):
+            html += f'<li class="task-item"><input type="checkbox"><div>🎯 <strong>Main Hifz Assignment:</strong> {q_data["main_hifz"]}</div></li>'
+        if q_data.get('review_surahs'):
             html += f'<li class="task-item"><input type="checkbox"><div>📖 <strong>Weekly Review Surahs:</strong> {", ".join(q_data["review_surahs"])}</div></li>'
-        html += f'<li class="task-item"><input type="checkbox"><div>🕌 <strong>Friday Recitation:</strong> {q_data["friday_recitation"]}</div></li>'
+        if q_data.get('friday_recitation'):
+            html += f'<li class="task-item"><input type="checkbox"><div>🕌 <strong>Friday Recitation:</strong> {q_data["friday_recitation"]}</div></li>'
         html += """
             </ul>
+"""
+        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('flashcards'):
+            html += """
             <div style="font-weight: 700; color: #0f172a; margin-top: 12px; margin-bottom: 4px;">📝 Arabic Class:</div>
             <ul class="task-list">
 """
-        html += f'<li class="task-item"><input type="checkbox"><div>📚 <strong>Unit Title:</strong> {q_data["arabic_unit"]}</div></li>'
-        html += f'<li class="task-item"><input type="checkbox"><div>📝 <strong>Study Guide:</strong> {q_data["study_guide"]}</div></li>'
-        if q_data['flashcards']:
-            html += f'<li class="task-item"><input type="checkbox"><div>🎴 <strong>Quizlet & Wordwall Flashcards:</strong></div></li><ul class="sub-task-list">'
-            for fc in q_data['flashcards']:
-                html += f'<li class="task-item"><input type="checkbox"><div>{fc}</div></li>'
+            if q_data.get('arabic_unit'):
+                html += f'<li class="task-item"><input type="checkbox"><div>📚 <strong>Unit Title:</strong> {q_data["arabic_unit"]}</div></li>'
+            if q_data.get('study_guide'):
+                html += f'<li class="task-item"><input type="checkbox"><div>📝 <strong>Homework:</strong> {q_data["study_guide"]}</div></li>'
+            if q_data.get('flashcards'):
+                html += f'<li class="task-item"><input type="checkbox"><div>🎴 <strong>Quizlet & Wordwall Flashcards:</strong></div></li><ul class="sub-task-list">'
+                for fc in q_data['flashcards']:
+                    html += f'<li class="task-item"><input type="checkbox"><div>{fc}</div></li>'
+                html += '</ul>'
             html += '</ul>'
-        html += "</ul></div>"
+        html += "</div>"
 
     # --- 5. ISLAMIC STUDIES ---
     if 'Islamic Studies' in subjects:
@@ -418,12 +454,17 @@ def generate_html_report(data):
                 <span class="subject-name">Islamic Studies</span>
                 <span class="teacher-name">{is_data['teacher']}</span>
             </div>
-            <div class="topic-tag">Chapter: {is_data['chapter_topic']}</div>
 """
-        if is_data['subtopics']:
+        if is_data.get('chapter_topic'):
+            html += f'<div class="topic-tag">Chapter: {is_data["chapter_topic"]}</div>'
+        if is_data.get('subtopics'):
             html += f'<div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">Coverage: {", ".join(is_data["subtopics"])}</div>'
-        html += f'<ul class="task-list"><li class="task-item"><input type="checkbox"><div>📝 {is_data["workbook_task"]}</div></li>'
-        if is_data['presentation_task']:
+        html += '<ul class="task-list">'
+        for task in is_data.get('tasks', []):
+            html += f'<li class="task-item"><input type="checkbox"><div>📝 {task}</div></li>'
+        if is_data.get('workbook_task'):
+            html += f'<li class="task-item"><input type="checkbox"><div>📝 {is_data["workbook_task"]}</div></li>'
+        if is_data.get('presentation_task'):
             html += f'<li class="task-item"><input type="checkbox"><div>💻 {is_data["presentation_task"]}</div></li>'
         html += "</ul></div>"
 
@@ -436,10 +477,15 @@ def generate_html_report(data):
                 <span class="subject-name">Computers</span>
                 <span class="teacher-name">{c_data['teacher']}</span>
             </div>
-            <div class="topic-tag">Tech Unit: {c_data['tech_topic']}</div>
-            <ul class="task-list">
-                <li class="task-item"><input type="checkbox"><div>💻 {c_data['edclub_task']}</div></li>
-                <li class="task-item"><input type="checkbox"><div>⌨️ {c_data['typing_task']}</div></li>
+"""
+        if c_data.get('tech_topic'):
+            html += f'<div class="topic-tag">Tech Unit: {c_data["tech_topic"]}</div>'
+        html += '<ul class="task-list">'
+        if c_data.get('edclub_task'):
+            html += f'<li class="task-item"><input type="checkbox"><div>💻 {c_data["edclub_task"]}</div></li>'
+        if c_data.get('typing_task'):
+            html += f'<li class="task-item"><input type="checkbox"><div>⌨️ {c_data["typing_task"]}</div></li>'
+        html += """
             </ul>
         </div>
 """

@@ -1,7 +1,9 @@
 {
-  "scrape_date": "2026-09-30 19:33",
+  "scrape_date": "2026-10-05 18:12",
+  "reference_date": "2026-10-05",
   "upcoming_events": [
     "Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]",
+    "Monday, Oct 5, 2026 – Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)",
     "Thursday, Oct 15 – School Improvement, No school for Students",
     "Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM",
     "Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students"
@@ -10,18 +12,18 @@
     "Language Arts": {
       "template_type": "ela",
       "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Module 2 - WHAT A STORY",
-      "writing_tasks": [
-        "Cause and Effect Essay (Final draft due Thursday, October 1)",
-        "Write support sentences for Topic Sentences (at least 6 per paragraph)",
-        "Review Essay Rubric Checklist"
-      ],
-      "ixl_due": "IXL Homework due Sunday 10/4",
+      "module": "Module 2 - WHAT A STORY (Story Elements) — The Miracle of Spring and More Plays",
+      "week_header": "W 9 OCTOBER 5 - OCTOBER 9 :",
+      "writing_tasks": [],
+      "ixl_due": "IXL Homework due Sunday 10/11",
       "ixl_items": [
-        "Create varied sentences based on models",
-        "Choose reasons to support an opinion",
-        "Identify supporting details in informational texts"
+        "Revise the sentence using a stronger verb",
+        "Add imagery to stories",
+        "Identify sensory details",
+        "Use actions and dialogue to understand characters",
+        "Identify elements of poetry"
       ],
+      "spelling_title": "Week 6 Spelling Words",
       "spelling_words": [
         "ounce",
         "sprawl",
@@ -38,7 +40,11 @@
         "pounce",
         "poison",
         "August",
-        "auction"
+        "auction",
+        "royal",
+        "coward",
+        "awkward",
+        "encounter"
       ],
       "tests": []
     },
@@ -46,84 +52,86 @@
       "template_type": "science_ss",
       "teacher": "Mrs. Tasneim Khalifa",
       "module": "Module 1: Matter",
-      "video_summary": "Summarize the video: Physical properties of Matter",
-      "ixl_due": "IXL Homework due Sunday 10/4",
-      "ixl_items": [
-        "Identify mixtures",
-        "Understand conservation of matter using graphs",
-        "Compare physical and chemical changes"
+      "week_header": "W9 OCTOBER 5 - OCTOBER 9 :",
+      "video_summary": "",
+      "ixl_due": "No IXL homework this week",
+      "ixl_items": [],
+      "tasks": [
+        "HOMEWORK: Conduct an Experiment: Handout and details will be given in class on Monday"
       ],
-      "tests": []
+      "tests": [
+        "MODULE 1 TEST on WEDNESDAY 10/7"
+      ]
     },
     "Social Studies": {
       "template_type": "science_ss",
       "teacher": "Mrs. Tasneim Khalifa",
       "module": "We will continue studying about the first Peoples of America",
+      "week_header": "W 9 OCTOBER 5 - OCTOBER 9 :",
       "video_summary": "Watch video: Every Native American Tribe Explained in 22 minutes - YouTube",
-      "ixl_due": "IXL Homework due Sunday 10/4",
+      "ixl_due": "IXL Homework due Sunday 10/11",
       "ixl_items": [
-        "Select oceans and continents",
-        "Identify states of the Southeast"
+        "Name oceans and continents",
+        "Identify states of the Northeast"
       ],
+      "tasks": [],
       "tests": []
     },
     "Mathematics": {
       "template_type": "math",
       "teacher": "Mrs. Hiba Naffakh",
-      "module": "Expressions",
+      "module": "Module 5: Volume",
       "has_deltamath": true,
       "ixl_codes": [
-        "H-4",
-        "KK-2"
+        "NN-8",
+        "UU-1"
       ],
       "tests": []
     },
     "Qur'an & Arabic": {
       "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
-      "week": "Q1 Week 8 (Sep 28 - Oct 02)",
-      "main_hifz": "Surah Al-Maarij (Verses 1–5)",
+      "week": "Q1 Week 9- Oct 05- 09",
+      "main_hifz": "Surah Al-Maarij (Ayah 1–10)",
       "review_surahs": [
-        "Surah Ad-Duha & Al-Inshirah (ASharh)",
-        "Surah Nuh (Verses 1–28)",
-        "Surah At-Teen & Al-Alaq",
+        "Surah Ad-Duha & ASharh",
+        "Surah Nuh",
+        "Surah Ateen & Al-Alaq",
         "Surah Al-Qadr & Al-Bayyina",
         "Surah Al-Balad",
         "Surah As-Shams & Al-Layl"
       ],
-      "friday_recitation": "Surat Al-Kahf (Verses 1–20)",
-      "arabic_unit": "To School! (إلَى المَدرَسَة)",
-      "study_guide": "Complete 50-point Unit Test Study Guide Worksheet",
-      "flashcards": [
-        "1. To School (إلى الْمدرسة)",
-        "2. Numbers (الأعداد)",
-        "3. What time is it? (كم الساعة؟)"
-      ],
+      "friday_recitation": "Surat Al-Kahf (Ayah 1–20)",
+      "arabic_unit": "In the Classroom",
+      "study_guide": "In the Classroom homework — Due date for both activities is Friday, October 18 inshAllah.",
+      "flashcards": [],
       "tests": [
-        "Surah Al-Maarij (Verses 1–5) Recitation & Hifz Test on Friday"
+        "Surah Al-Maarij (Ayah 1–10) Hifz Test on Thursday"
       ]
     },
     "Islamic Studies": {
       "template_type": "is",
       "teacher": "Mrs. Mubeen Fatima",
-      "chapter_topic": "Belief in Angels & Books",
-      "subtopics": [
-        "Size & Appearance",
-        "Powers, Numbers & Names of Angels",
-        "Jobs & Incorrect Beliefs"
+      "chapter_topic": "Belief in Books and Scriptures",
+      "subtopics": [],
+      "workbook_task": "",
+      "presentation_task": "",
+      "tasks": [
+        "Wordwall activity 1",
+        "Wordwall activity 2"
       ],
-      "workbook_task": "Complete Notes and Assignment Worksheet",
-      "presentation_task": "Review Class Presentation on Belief in Angels & Books",
-      "tests": []
+      "tests": [
+        "Test on Wednesday Oct 7th on Belief in Angels. Practice the word wall activities given below and the assignments done in the class"
+      ]
     },
     "Computers": {
       "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "tech_topic": "What is the Cloud / Cloud Computing",
-      "edclub_task": "Complete Digital Citizenship & Digital Literacy (Lessons 229 to 235)",
-      "typing_task": "Daily typing practice on Typing.com",
+      "tech_topic": "Email Etiquettes",
+      "edclub_task": "Edclub: Complete lesson 219 to 228 (Digital citizenship+Digital Literacy)",
+      "typing_task": "",
       "tests": []
     }
   },
-  "week_title": "Quarter 1 Week 8"
+  "week_title": "Quarter 1 Week 9"
 }
