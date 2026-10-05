@@ -350,13 +350,16 @@ def parse_all_subjects():
     sp_lines = raw_data['spelling']['lines']
     spelling_words = []
     spelling_title = ""
+    spelling_week_num = None
     started = False
     for line in sp_lines:
-        if re.match(r'^Week\s*\d+\s*Spelling', line, re.IGNORECASE):
+        m_sp = re.match(r'^Week\s*(\d+)\s*Spelling', line, re.IGNORECASE)
+        if m_sp:
             if started:
                 break
             started = True
             spelling_title = line
+            spelling_week_num = int(m_sp.group(1))
             continue
         if started:
             if line.strip().lower() in ('review', 'challenge'):
@@ -366,6 +369,15 @@ def parse_all_subjects():
                 w = match.group(1).strip()
                 if w and w not in spelling_words:
                     spelling_words.append(w)
+
+    # Check if the spelling list is current with the active week
+    curr_week_match = re.search(r'W(?:eek)?\s*(\d+)', ela_header, re.IGNORECASE)
+    if curr_week_match and spelling_week_num:
+        curr_week_num = int(curr_week_match.group(1))
+        if spelling_week_num < curr_week_num:
+            print(f"[SCRAPER] Hiding Spelling section: list is for Week {spelling_week_num}, active week is Week {curr_week_num}")
+            spelling_words = []
+            spelling_title = ""
 
     extracted['subjects']['Language Arts'] = {
         'template_type': 'ela',
