@@ -490,9 +490,10 @@ def parse_all_subjects():
     # ----------------------------------------------------
     quran_sublink = find_subpage_link(raw_data['quran']['links'])
     q_lines = []
+    q_links = []
     if quran_sublink:
         print(f"[SCRAPER] Found Qur'an current week link: {quran_sublink}")
-        q_lines, _ = fetch_site_text(quran_sublink)
+        q_lines, q_links = fetch_site_text(quran_sublink)
 
     quran_week = ""
     for line in q_lines:
@@ -505,7 +506,6 @@ def parse_all_subjects():
         for k in range(idx + 1, min(idx + 1 + lookahead, len(q_lines))):
             if re.match(r'^Sura[ht]\b', q_lines[k], re.IGNORECASE):
                 name = q_lines[k].strip(' :')
-                # Paired surahs: the 2nd English name sits on the Arabic line, e.g. 'سُورة الضُّحَى & ASharh الشَّرح'
                 if '&' not in name and k + 1 < len(q_lines) and '&' in q_lines[k + 1]:
                     latin = re.findall(r'[A-Za-z][A-Za-z\'-]+', q_lines[k + 1].split('&', 1)[1])
                     if latin:
@@ -528,7 +528,7 @@ def parse_all_subjects():
             k, surah = next_surah(idx)
             if surah:
                 rng = ayah_range_after(q_lines, k + 2)
-                main_hifz = f"{surah} (Ayah {rng})" if rng else surah  # last one in the week wins
+                main_hifz = f"{surah} (Ayah {rng})" if rng else surah
         elif 'مراجعة' in line:
             k, surah = next_surah(idx)
             if surah and surah not in review_surahs:
@@ -543,16 +543,36 @@ def parse_all_subjects():
             rng = ayah_range_after(q_lines, idx, 2)
             friday_recitation = f"{line.strip()}{' (Ayah ' + rng + ')' if rng else ''}"
 
-    # Hifz surah appears in review lists too — keep reviews distinct
     hifz_name = main_hifz.split(' (')[0]
     review_surahs = [s for s in review_surahs if s != hifz_name]
 
-    # Arabic homework / due dates
+    # Detect Arabic Activity Platforms (Blooket, Quizlet, Wordwall, Book/Worksheet, etc.)
+    arabic_platforms = []
+    for l in q_links:
+        low_link = l.lower()
+        if 'blooket' in low_link and 'Blooket Game' not in arabic_platforms:
+            arabic_platforms.append('Blooket Game')
+        elif 'quizlet' in low_link and 'Quizlet Flashcards' not in arabic_platforms:
+            arabic_platforms.append('Quizlet Flashcards')
+        elif 'wordwall' in low_link and 'Wordwall Activity' not in arabic_platforms:
+            arabic_platforms.append('Wordwall Activity')
+        elif 'liveworksheets' in low_link and 'Interactive Worksheet' not in arabic_platforms:
+            arabic_platforms.append('Interactive Worksheet')
+
     arabic_unit = ""
     study_guide = ""
     flashcards_list = []
     for idx, line in enumerate(q_lines):
         low = line.lower()
+        if 'blooket' in low and 'Blooket Game' not in arabic_platforms:
+            arabic_platforms.append('Blooket Game')
+        if 'quizlet' in low and 'Quizlet Flashcards' not in arabic_platforms:
+            arabic_platforms.append('Quizlet Flashcards')
+        if 'wordwall' in low and 'Wordwall Activity' not in arabic_platforms:
+            arabic_platforms.append('Wordwall Activity')
+        if ('notebook' in low or 'book page' in low) and 'Book/Notebook Practice' not in arabic_platforms:
+            arabic_platforms.append('Book/Notebook Practice')
+
         if re.search(r'\bHW\b', line) and not arabic_unit:
             arabic_unit = line.replace('HW', '').strip()
         if 'due date' in low and not study_guide:
@@ -565,6 +585,7 @@ def parse_all_subjects():
         if any(k in low for k in ['quizlet', 'wordwall', 'flashcard']) and len(line) < 100:
             if line not in flashcards_list:
                 flashcards_list.append(line)
+
     if arabic_unit and study_guide:
         study_guide = f"{arabic_unit} homework — {study_guide}"
 
@@ -583,6 +604,7 @@ def parse_all_subjects():
         'friday_recitation': friday_recitation,
         'arabic_unit': arabic_unit,
         'study_guide': study_guide,
+        'arabic_platforms': arabic_platforms,
         'flashcards': flashcards_list,
         'tests': quran_tests
     }

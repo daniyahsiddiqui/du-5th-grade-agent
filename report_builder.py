@@ -95,10 +95,12 @@ def generate_markdown_report(data):
         if q_data.get('friday_recitation'):
             md.append(f"- [ ] 🕌 **Friday Surah Practice:** {q_data['friday_recitation']}")
         
-        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('flashcards'):
+        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('arabic_platforms') or q_data.get('flashcards'):
             md.append("**📝 Arabic Class:**")
             if q_data.get('arabic_unit'):
                 md.append(f"- [ ] 📚 **Unit Title:** {q_data['arabic_unit']}")
+            if q_data.get('arabic_platforms'):
+                md.append(f"- [ ] 🎮 **Activity Platforms:** {', '.join(q_data['arabic_platforms'])}")
             if q_data.get('study_guide'):
                 md.append(f"- [ ] 📝 **Homework:** {q_data['study_guide']}")
             if q_data.get('flashcards'):
@@ -428,13 +430,15 @@ def generate_html_report(data):
         html += """
             </ul>
 """
-        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('flashcards'):
+        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('arabic_platforms') or q_data.get('flashcards'):
             html += """
             <div style="font-weight: 700; color: #0f172a; margin-top: 12px; margin-bottom: 4px;">📝 Arabic Class:</div>
             <ul class="task-list">
 """
             if q_data.get('arabic_unit'):
                 html += f'<li class="task-item"><input type="checkbox"><div>📚 <strong>Unit Title:</strong> {q_data["arabic_unit"]}</div></li>'
+            if q_data.get('arabic_platforms'):
+                html += f'<li class="task-item"><input type="checkbox"><div>🎮 <strong>Activity Platforms:</strong> {", ".join(q_data["arabic_platforms"])}</div></li>'
             if q_data.get('study_guide'):
                 html += f'<li class="task-item"><input type="checkbox"><div>📝 <strong>Homework:</strong> {q_data["study_guide"]}</div></li>'
             if q_data.get('flashcards'):
