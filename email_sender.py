@@ -71,7 +71,7 @@ def send_weekly_email(subject, html_content, text_content, recipient_override=No
     recipients_str = ", ".join(recipients)
     msg = MIMEMultipart("mixed")
     msg["Subject"] = subject
-    msg["From"] = f"DU 5th Grade Weekly Agent <{sender}>"
+    msg["From"] = f"DU Homework Agent <{sender}>"
     msg["To"] = recipients_str
 
     # Create alternative container for text + html
