@@ -1,9 +1,9 @@
-name: DU 5th Grade Weekly Agent Run
+name: DU 8th Grade Weekly Agent Run
 
 on:
   schedule:
-    # Runs every Sunday at 11:00 UTC (7:00 AM EST)
-    - cron: '0 11 * * 0'
+    # Runs every Sunday at 9:00 AM Central Time (14:00 UTC)
+    - cron: '0 14 * * 0'
   workflow_dispatch: # Allows 1-click manual trigger from GitHub Actions tab!
 
 permissions:
@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Run Weekly Agent & Email Digest
+      - name: Run 8th Grade Weekly Agent & Email Digest
         env:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
