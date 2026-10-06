@@ -1,92 +1,120 @@
 {
-  "scrape_date": "2026-10-06 02:31",
+  "scrape_date": "2026-10-06 02:38",
   "reference_date": "2026-10-06",
   "upcoming_events": [
-    "PTO Family Picnic [1:45PM-4:45PM] Monday, Oct 5, 2026 -",
-    "Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)"
+    "Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]",
+    "Monday, Oct 5, 2026 – Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)",
+    "Thursday, Oct 15 – School Improvement, No school for Students",
+    "Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM",
+    "Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students"
   ],
   "subjects": {
+    "Language Arts": {
+      "template_type": "ela",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "Module 2 - WHAT A STORY (Story Elements) — The Miracle of Spring and More Plays",
+      "week_header": "W 9 OCTOBER 5 - OCTOBER 9 :",
+      "writing_tasks": [],
+      "ixl_due": "IXL Homework due Sunday 10/11",
+      "ixl_items": [
+        "Revise the sentence using a stronger verb",
+        "Add imagery to stories",
+        "Identify sensory details",
+        "Use actions and dialogue to understand characters",
+        "Identify elements of poetry"
+      ],
+      "spelling_title": "",
+      "spelling_words": [],
+      "tests": []
+    },
     "Science": {
-      "teacher": "Mrs. Maoued",
-      "module": "Unit 1, L.1. The properties of Matter.",
+      "template_type": "science_ss",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "Module 1: Matter",
+      "week_header": "W9 OCTOBER 5 - OCTOBER 9 :",
+      "video_summary": "",
+      "ixl_due": "No IXL homework this week",
+      "ixl_items": [],
       "tasks": [
-        "Workbook pages: 6-7.",
-        "IXL  E.1"
+        "HOMEWORK: Conduct an Experiment: Handout and details will be given in class on Monday"
+      ],
+      "tests": [
+        "MODULE 1 TEST on WEDNESDAY 10/7"
+      ]
+    },
+    "Social Studies": {
+      "template_type": "science_ss",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "We will continue studying about the first Peoples of America",
+      "week_header": "W 9 OCTOBER 5 - OCTOBER 9 :",
+      "video_summary": "Watch video: Every Native American Tribe Explained in 22 minutes - YouTube",
+      "ixl_due": "IXL Homework due Sunday 10/11",
+      "ixl_items": [
+        "Name oceans and continents",
+        "Identify states of the Northeast"
+      ],
+      "tasks": [],
+      "tests": []
+    },
+    "Mathematics": {
+      "template_type": "math",
+      "teacher": "Mrs. Hiba Naffakh",
+      "module": "Module 5: Volume",
+      "has_deltamath": true,
+      "ixl_codes": [
+        "NN-8",
+        "UU-1"
       ],
       "tests": []
     },
-    "Language Arts": {
-      "teacher": "Mrs. Stewart / Ms. Carman",
-      "module": "Week 9 —  October 5 - 9",
-      "tasks": [
-        "Link to Figurative Language Examples! (You MUST get Ms. Carman's approval of your phrase to earn credit!)",
-        "Homework: Finish and Submit Final Draft share with Ms. Carman by 11:59pm",
-        "Classwork: Comprehension Check of"
-      ],
-      "tests": [
-        ": Vocab quiz and Film Viewing (TBD)",
-        "Classwork: Vocabulary Quiz"
-      ]
-    },
-    "US History II": {
-      "teacher": "Ms. Anderson",
-      "module": "Module 17 Lesson 1 Quiz",
-      "tasks": [],
-      "tests": [
-        "MODULE 16 TEST"
-      ]
-    },
-    "Mathematics (Algebra I)": {
-      "teacher": "Mrs. Cluskey",
-      "module": "Algebra I",
-      "tasks": [
-        "10/5- Point",
-        "-Slope Form of a Line",
-        "10/6- Writing Linear Equations",
-        "10/7- S",
-        "pecial Linear Relationships",
-        "10/8- Review"
-      ],
-      "tests": [
-        "10/9- Test"
-      ]
-    },
     "Qur'an & Arabic": {
+      "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
-      "week": "DU QUR'AN & ARABIC - Q1 Week 9- Oct 05 -Oct 05",
-      "tasks": [
-        "Hifz: Surah Al-Hadid",
-        "Friday: Tilawah — Surat Al-Kahf 1-20",
-        "Tajweed: Rules of Noon Sakinah and Tanween Flashcards | Quizlet",
-        "Arabic Practice: Wordwall:",
-        "Arabic Practice: أسئلة/سورة الحديد",
-        "Arabic Lesson — آداب الطَّعَامِ (Food Etiquettes)",
-        "Arabic Activity Platforms: Quizlet Flashcards, Wordwall Activity"
+      "week": "Q1 Week 9- Oct 05- 09",
+      "main_hifz": "Surah Al-Maarij (Ayah 1–10)",
+      "review_surahs": [
+        "Surah Ad-Duha & ASharh",
+        "Surah Nuh",
+        "Surah Ateen & Al-Alaq",
+        "Surah Al-Qadr & Al-Bayyina",
+        "Surah Al-Balad",
+        "Surah As-Shams & Al-Layl"
       ],
+      "friday_recitation": "Surat Al-Kahf (Ayah 1–20)",
+      "arabic_unit": "In the Classroom",
+      "study_guide": "In the Classroom homework — Due date for both activities is Friday, October 18 inshAllah.",
+      "arabic_platforms": [
+        "Blooket Game",
+        "Book/Notebook Practice"
+      ],
+      "flashcards": [],
       "tests": [
-        "Qur'an Memorization Test (Thursday): Surah Al-Hadid",
-        "the reading Test will be ob"
+        "Surah Al-Maarij (Ayah 1–10) Hifz Test on Thursday"
       ]
     },
     "Islamic Studies": {
-      "teacher": "Ms. Mahmood",
-      "module": "Islamic Studies",
+      "template_type": "is",
+      "teacher": "Mrs. Mubeen Fatima",
+      "chapter_topic": "Belief in Books and Scriptures",
+      "subtopics": [],
+      "workbook_task": "",
+      "presentation_task": "",
       "tasks": [
-        "Project Due Wednesday 7th October",
-        "OPTION 1: Make a creative poster with all 99 names of Allah with English meaning",
-        "OPTION 2: Make a poster explaining 1 name of Allah"
+        "Wordwall activity 1",
+        "Wordwall activity 2"
       ],
-      "tests": []
+      "tests": [
+        "Test on Wednesday Oct 7th on Belief in Angels. Practice the word wall activities given below and the assignments done in the class"
+      ]
     },
     "Computers": {
+      "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "module": "Learn by doing Sheets latest version",
-      "tasks": [
-        "Fast Finisher",
-        "Typing on Edclub or any typing website"
-      ],
+      "tech_topic": "Email Etiquettes",
+      "edclub_task": "Edclub: Complete lesson 219 to 228 (Digital citizenship+Digital Literacy)",
+      "typing_task": "",
       "tests": []
     }
   },
-  "week_title": "DU QUR'AN & ARABIC - Q1 Week 9- Oct 05 -Oct 05"
+  "week_title": "Quarter 1 Week 9"
 }
