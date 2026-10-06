@@ -4,7 +4,7 @@ from datetime import datetime
 
 def generate_markdown_report(data):
     date_str = data.get('scrape_date', datetime.now().strftime('%Y-%m-%d'))
-    week_title = data.get('week_title') or "Quarter 1 Week 8 (Sep 28 - Oct 2)"
+    week_title = data.get('week_title') or "This Week"
     if week_title.startswith("Q1"):
         week_title = week_title.replace("Q1", "Quarter 1")
     elif week_title.startswith("Q2"):
@@ -67,7 +67,7 @@ def generate_markdown_report(data):
 
 def generate_html_report(data):
     date_str = data.get('scrape_date', datetime.now().strftime('%Y-%m-%d'))
-    week_title = data.get('week_title') or "Quarter 1 Week 8 (Sep 28 - Oct 2)"
+    week_title = data.get('week_title') or "This Week"
     if week_title.startswith("Q1"):
         week_title = week_title.replace("Q1", "Quarter 1")
     elif week_title.startswith("Q2"):

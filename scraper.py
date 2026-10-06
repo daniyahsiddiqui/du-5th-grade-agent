@@ -2,7 +2,8 @@ import os
 import urllib.request
 import re
 from html.parser import HTMLParser
-from datetime import datetime
+from datetime import datetime, date, timedelta
+
 
 class TextExtractor(HTMLParser):
     def __init__(self):
@@ -23,6 +24,7 @@ class TextExtractor(HTMLParser):
         if cleaned and not cleaned.startswith('{') and not cleaned.startswith('var ') and len(cleaned) < 500:
             self.text.append(cleaned)
 
+
 def fetch_site_text(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'}
@@ -35,38 +37,27 @@ def fetch_site_text(url):
                         headers['Cookie'] = cookie_str
             except Exception:
                 pass
+
         req = urllib.request.Request(url, headers=headers)
         html = urllib.request.urlopen(req, timeout=15).read().decode('utf-8')
         parser = TextExtractor()
         parser.feed(html)
-        nav_noise = {
-            'Daarul Uloom School', 'DU 8th Grade', 'Search this site', 'Skip to main content',
-            'Skip to navigation', 'Home', 'Language Arts', 'Spelling words', 'ELA charts',
-            'Science', 'Social Studies', 'Class Points', 'More', 'Google Sites', 'Report abuse',
-            'Page details', 'Page updated', 'Embedded Files', 'Mrs. Naffakh',
-            "DU QUR'AN & ARABIC", 'Islamic Studies MS', 'Middle School Computers'
-        }
-        filtered = [
-            t for t in parser.text
-            if t not in nav_noise
-            and not t.startswith('DOCS_timing')
-            and 'globals.header' not in t
-            and 'function _DumpException' not in t
-        ]
-        return filtered, parser.links
+        return parser.text, parser.links
     except Exception as e:
         print(f"[SCRAPE WARNING] Failed to fetch {url}: {e}")
         return [], []
 
+
 def clean_lines(lines):
-    """Remove boilerplate/noise lines from scraped content."""
     noise_patterns = [
-        r'^window\.WIZ',
-        r'^\(function',
-        r'^\.rrJNTc',
-        r'^@media',
-        r'^\s*$',
-        r'^[5-8]TH GRADE$',
+        r'DU 8th Grade',
+        r'Google Sites',
+        r'Report abuse',
+        r'Page details',
+        r'Page updated',
+        r'DOCS_timing',
+        r'globals\.header',
+        r'function _DumpException',
         r'^Grade [5-8]$',
         r'^Search this site',
         r'^Skip to',
@@ -83,53 +74,121 @@ def clean_lines(lines):
         cleaned.append(line_s)
     return cleaned
 
+
+# ============================================================
+# DATE-AWARE CURRENT WEEK DETECTION
+# ============================================================
+MONTH_WORDS = {
+    'jan': 1, 'january': 1, 'feb': 2, 'february': 2, 'mar': 3, 'march': 3,
+    'apr': 4, 'april': 4, 'may': 5, 'june': 6, 'june': 6, 'jul': 7, 'july': 7,
+    'aug': 8, 'august': 8, 'sep': 9, 'sept': 9, 'september': 9,
+    'oct': 10, 'october': 10, 'nov': 11, 'november': 11, 'dec': 12, 'december': 12,
+}
+
+
+def get_reference_date(today=None):
+    """The date the report is 'for'. On weekends look ahead to the upcoming Monday."""
+    today = today or date.today()
+    if today.weekday() >= 5:  # Saturday / Sunday
+        today = today + timedelta(days=7 - today.weekday())
+    return today
+
+
+def _school_year_for_month(month, ref):
+    school_start_year = ref.year if ref.month >= 7 else ref.year - 1
+    return school_start_year if month >= 7 else school_start_year + 1
+
+
+def parse_week_range(text, ref=None):
+    """
+    Extract a (start_date, end_date) range from week labels / URL slugs.
+    """
+    ref = ref or get_reference_date()
+    t = text.lower()
+    dates = []
+
+    for m in re.finditer(r'(?<!\d)(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})(?!\d)', t):
+        mo, d, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        y = y + 2000 if y < 100 else y
+        try:
+            dates.append(date(y, mo, d))
+        except ValueError:
+            pass
+    for m in re.finditer(r'(?<!\d)(\d{2})(\d{2})(20\d{2})(?!\d)', t):
+        try:
+            dates.append(date(int(m.group(3)), int(m.group(1)), int(m.group(2))))
+        except ValueError:
+            pass
+
+    if not dates:
+        cur_month = None
+        for tok in re.findall(r'[a-z]+|\d+', t):
+            if tok in MONTH_WORDS:
+                cur_month = MONTH_WORDS[tok]
+            elif tok.isdigit() and cur_month:
+                day = int(tok)
+                if 1 <= day <= 31:
+                    try:
+                        dates.append(date(_school_year_for_month(cur_month, ref), cur_month, day))
+                    except ValueError:
+                        pass
+            elif tok in ('st', 'nd', 'rd', 'th', 'of', 'to'):
+                continue
+
+    if not dates:
+        return None
+    start, end = min(dates), max(dates)
+    if start == end:
+        end = start + timedelta(days=6)
+    return (start, end)
+
+
+def pick_current(candidates, ref=None):
+    ref = ref or get_reference_date()
+    dated = []
+    for label, payload in candidates:
+        rng = parse_week_range(label, ref)
+        if rng:
+            dated.append((rng, label, payload))
+
+    for (start, end), label, payload in dated:
+        if start <= ref <= end:
+            return payload, label
+    past = [d for d in dated if d[0][0] <= ref]
+    if past:
+        best = max(past, key=lambda d: d[0][0])
+        return best[2], best[1]
+    if candidates:
+        def week_num(cand):
+            m = re.search(r'week[-_\s]*(\d+)', cand[0])
+            return int(m.group(1)) if m else 0
+        best_cand = max(candidates, key=week_num)
+        return best_cand[1], best_cand[0]
+    return None, None
+
+
 def find_subpage_link(links, grade_pattern='8th'):
     """Dynamically picks the latest weekly subpage using calendar-aware date sorting."""
-    MONTH_ORDER = {
-        'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12,
-        'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7
-    }
-
-    def link_date_key(link):
-        """Extract a sortable (month, day) tuple from a URL like week-of-sept-28-oct-2."""
-        ll = link.lower()
-        # Find month names in the URL
-        months_found = []
-        for mon, num in MONTH_ORDER.items():
-            idx = ll.find(mon)
-            if idx != -1:
-                # Try to grab the day number right after the month name
-                after = ll[idx + len(mon):idx + len(mon) + 4].lstrip('-')
-                day_match = re.match(r'(\d+)', after)
-                day = int(day_match.group(1)) if day_match else 0
-                months_found.append((num, day, idx))
-        if months_found:
-            # Pick the last month/day occurrence in URL (the end-of-week date)
-            months_found.sort(key=lambda x: x[2])  # sort by position in URL
-            last = months_found[-1]
-            return (last[0], last[1])
-        # Fallback: look for bare numbers
-        nums = re.findall(r'\d+', ll)
-        return (0, int(nums[-1])) if nums else (0, 0)
-
-    sub_links = []
+    candidates = []
+    seen = set()
     for link in links:
-        link_lower = link.lower()
-        if grade_pattern in link_lower or 'eighth' in link_lower:
+        link_lower = link.lower().split('?')[0]
+        if (grade_pattern in link_lower or 'eighth' in link_lower) and link_lower not in seen:
             if any(kw in link_lower for kw in [
                 'week', 'quarter', 'q1', 'q2', 'q3', 'q4',
                 'sep', 'oct', 'nov', 'dec', 'jan', 'feb', 'mar', 'apr', 'may'
             ]):
-                sub_links.append(link)
-    if sub_links:
-        sub_links.sort(key=link_date_key, reverse=True)
-        return sub_links[0]
+                seen.add(link_lower)
+                candidates.append((link_lower, link))
+    if candidates:
+        link, _ = pick_current(candidates)
+        return link
     return None
+
 
 def extract_current_week_block(lines, week_header_pattern=r'^Week\s+\d+'):
     """
-    For pages that list multiple weeks (newest first), extract only the first/latest week block.
-    Returns lines between the first week header and the second week header.
+    For pages that list multiple weeks (newest first), extract only the current week block.
     """
     block = []
     in_block = False
@@ -137,23 +196,30 @@ def extract_current_week_block(lines, week_header_pattern=r'^Week\s+\d+'):
         if re.match(week_header_pattern, line, re.IGNORECASE):
             if not in_block:
                 in_block = True
-                continue   # skip the header line itself
+                continue
             else:
-                break      # hit next week — stop
+                break
         if in_block:
             block.append(line)
     return block
 
+
+# ============================================================
+# MAIN 8TH GRADE SCRAPER
+# ============================================================
 def parse_all_subjects():
+    ref = get_reference_date()
+    print(f"[SCRAPER] Reference date for 'current week': {ref.isoformat()}")
+
     base_sites = {
         'homeroom': 'https://sites.google.com/view/daarululoomschool/home/8th-grade',
-        'ela': 'https://sites.google.com/view/mrsstewartselaclasses/home',
-        'ela_8th': 'https://sites.google.com/view/mrsstewartselaclasses/8th-grade-english',
-        'history': 'https://sites.google.com/view/miss-sanas-website/home',
+        'ela': 'https://sites.google.com/view/mrsstewartselaclasses/8th-grade-english',
+        'ela_8th': 'https://sites.google.com/view/mrsstewartselaclasses/8th-grade-english/8th-grade-quarter-one',
+        'history': 'https://sites.google.com/view/miss-sanas-website',
         'math': 'https://sites.google.com/view/mrscluskey-classes/algebra-i/lesson-plans',
         'quran': 'https://sites.google.com/view/du-quran-arabic/8th-grade',
         'is': 'https://sites.google.com/view/dums-islamicstudies/8th-grade',
-        'comp': 'https://sites.google.com/view/middleschoolcomputers/8th-grade',
+        'comp': 'https://sites.google.com/view/middleschoolcomputers/8th-grade/quarter-1'
     }
 
     raw_data = {}
@@ -163,12 +229,13 @@ def parse_all_subjects():
 
     extracted = {
         'scrape_date': datetime.now().strftime('%Y-%m-%d %H:%M'),
+        'reference_date': ref.isoformat(),
         'upcoming_events': [],
         'subjects': {}
     }
 
     # --------------------------------------------------------
-    # 1. Homeroom — Events + Science (Science lives here)
+    # 1. Homeroom — Events + Science (Mrs. Maoued)
     # --------------------------------------------------------
     hr_sublink = find_subpage_link(raw_data['homeroom']['links'], '8th')
     science_lines = []
@@ -184,13 +251,11 @@ def parse_all_subjects():
     i = 0
     while i < len(hr_clean):
         line = hr_clean[i]
-        # Look for event-flagged lines
-        if any(ev_kw in line.lower() for ev_kw in ['picnic', 'conference', 'improvement', 'no school', 'early dismissal', 'holiday', 'pto']):
-            # Try to attach the following date/time line if it looks like one
+        if any(ev_kw in line.lower() for ev_kw in ['picnic', 'conference', 'improvement', 'no school', 'early dismissal', 'holiday', 'pto', 'picture']):
             parts = [line]
             if i + 1 < len(hr_clean):
                 nxt = hr_clean[i + 1]
-                if any(dt in nxt.lower() for dt in ['am', 'pm', '2026', '2025', 'oct', 'nov', 'dec', 'jan', 'feb', '[', ']']):
+                if any(dt in nxt.lower() for dt in ['am', 'pm', '2026', '2025', 'oct', 'nov', 'dec', 'jan', 'feb', '[', ']', '-']):
                     parts.append(nxt)
             event_text = ' '.join(parts)
             if event_text not in clean_events:
@@ -201,7 +266,7 @@ def parse_all_subjects():
         clean_events = ["No explicit upcoming school events posted for this week."]
     extracted['upcoming_events'] = clean_events
 
-    # Science: from the homeroom weekly subpage — filter to tests, IXL, study guide, HW
+    # Science (Mrs. Maoued)
     sci_clean = clean_lines(science_lines)
     sci_tasks = []
     sci_tests = []
@@ -209,23 +274,17 @@ def parse_all_subjects():
 
     sci_skip = {'Objectives:', 'Objectives'}
     for line in sci_clean:
-        if line in sci_skip:
+        if line in sci_skip or re.match(r'^Week of', line, re.IGNORECASE):
             continue
-        if re.match(r'^Week of', line, re.IGNORECASE):
-            continue
-        # Module name: "Unit N, L.N. Topic" — but only if it's not a test/quiz line itself
         if re.match(r'^Unit\s+\d+', line, re.IGNORECASE) and len(line) < 100:
             if 'test' not in line.lower() and 'quiz' not in line.lower():
                 sci_module = line
-            # Still check if it's a test line below
-        # Tests / quizzes — but NOT "review" lines (those are tasks)
         if any(kw in line.lower() for kw in ['quiz', 'exam', 'assessment']) and 'review' not in line.lower() and len(line) < 150:
             if line not in sci_tests:
                 sci_tests.append(line)
         elif 'test' in line.lower() and 'review' not in line.lower() and len(line) < 150:
             if line not in sci_tests:
                 sci_tests.append(line)
-        # Review, homework, IXL, study guide, blooket, workbook → tasks
         elif any(kw in line.lower() for kw in ['review', 'h.w', 'homework', 'ixl', 'study guide', 'workbook', 'blooket', 'pages', 'grow day']) and len(line) < 150:
             if line not in sci_tasks:
                 sci_tasks.append(line)
@@ -242,7 +301,6 @@ def parse_all_subjects():
 
     # --------------------------------------------------------
     # 2. Language Arts (Mrs. Stewart / Ms. Carman)
-    #    Page lists all weeks newest-first. Extract only Week 8 block.
     # --------------------------------------------------------
     ela_links = raw_data['ela']['links'] + raw_data['ela_8th']['links']
     ela_sublink = find_subpage_link(ela_links, '8th')
@@ -254,18 +312,13 @@ def parse_all_subjects():
             ela_raw = sub_lines
 
     ela_all = clean_lines(ela_raw)
-
-    # Week 8 is at the TOP of the page with a fragmented header:
-    # 'Week', '8', '- September', '28 - October 2' then the daily content.
-    # The first "Week 7-" (or lower) header line signals the end of the current week.
     ela_week = []
-    ela_week_title = "Quarter 1 Week 8"
+    ela_week_title = "Quarter 1"
     for line in ela_all:
         if re.match(r'^Week\s+[1-7]\b', line, re.IGNORECASE):
-            break   # hit an older week — stop
+            break
         ela_week.append(line)
 
-    # Build a cleaner week title from the fragmented header ('Week', '8', '- September', '28 - October 2')
     for i, line in enumerate(ela_week):
         if line == 'Week' and i + 1 < len(ela_week) and ela_week[i + 1].strip().isdigit():
             week_num = ela_week[i + 1].strip()
@@ -279,8 +332,6 @@ def parse_all_subjects():
             ela_week_title = f"Week {week_num} — {' '.join(date_parts)}".strip(' —')
             break
 
-    # Only collect: Homework, IXL skills, due dates, quizzes, tests, projects
-    # Discard: day-by-day Reading/Writing classwork schedule
     ela_tasks = []
     ela_tests = []
     day_names = {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'}
@@ -288,20 +339,14 @@ def parse_all_subjects():
     i = 0
     while i < len(ela_week):
         line = ela_week[i]
-
-        # Skip day labels, bare separators, and fragmented week header pieces
         if line in day_names or line in (':', 'Reading', 'Writing', 'Week', 'Quarter 1'):
             i += 1
             continue
-
-        # Skip bare book title / short page-range fragments (non-actionable)
         if line in ('A Monster Calls',) or re.match(r'^\(.*\)$', line) or re.match(r'^".*"$', line):
             i += 1
             continue
 
-        # ── Homework lines ──
         if line.lower().startswith('homework:') or line.lower().startswith('h.w'):
-            # Grab continuation lines (e.g. "share with Ms. Carman by 11:59pm" / due dates)
             task = line
             if i + 1 < len(ela_week) and ela_week[i + 1] not in day_names and ela_week[i + 1] not in ('Reading', 'Writing') and len(ela_week[i + 1]) < 80:
                 nxt = ela_week[i + 1]
@@ -313,10 +358,8 @@ def parse_all_subjects():
             i += 1
             continue
 
-        # ── IXL skill assignments ──
         if 'ixl skill' in line.lower() or 'ixl skills' in line.lower():
             task = line
-            # Merge continuation (skill code / due date on next line)
             if i + 1 < len(ela_week) and ela_week[i + 1] not in day_names and len(ela_week[i + 1]) < 60:
                 nxt = ela_week[i + 1]
                 if 'due' in nxt.lower() or re.match(r'^\(', nxt):
@@ -327,28 +370,24 @@ def parse_all_subjects():
             i += 1
             continue
 
-        # ── Due date callouts (e.g. "Final draft due next Tuesday (9/29)") ──
         if 'due' in line.lower() and len(line) < 100 and not line.lower().startswith('homework:'):
             if line not in ela_tasks:
                 ela_tasks.append(line)
             i += 1
             continue
 
-        # ── Quizzes and tests ──
         if any(kw in line.lower() for kw in ['vocab quiz', 'vocabulary quiz', 'map testing']) and len(line) < 150:
             if line not in ela_tests:
                 ela_tests.append(line)
             i += 1
             continue
 
-        # Comprehension check → classwork task
         if 'comprehension check' in line.lower() and len(line) < 150:
             if line not in ela_tasks:
                 ela_tasks.append(line)
             i += 1
             continue
 
-        # ── Figurative language project link (actionable callout at top of page) ──
         if 'figurative language' in line.lower() and 'approval' in line.lower():
             if line not in ela_tasks:
                 ela_tasks.append(line)
@@ -357,7 +396,6 @@ def parse_all_subjects():
 
         i += 1
 
-    # Deduplicate
     ela_tasks = list(dict.fromkeys(ela_tasks))
     ela_tests = list(dict.fromkeys(ela_tests))
 
@@ -387,16 +425,10 @@ def parse_all_subjects():
     hist_tests = []
     hist_module = "US History II"
 
-    # Extract only the current week block (Week N header)
-    hist_week = extract_current_week_block(hist_clean, r'^Week\s+\d+')
-    if not hist_week:
-        hist_week = hist_clean
-
-    for line in hist_week:
-        # Only use pure "Module N" or "Unit N" lines as module names
-        if re.match(r'^Module\s+\d+\s*$', line, re.IGNORECASE):
+    for line in hist_clean:
+        if line.startswith('Module ') and len(line) < 40 and 'test' not in line.lower():
             hist_module = line
-        elif any(kw in line.lower() for kw in ['test', 'exam']) and len(line) < 150:
+        elif re.match(r'^(module\s+\d+\s+test|chapter\s+\d+\s+test)', line, re.IGNORECASE):
             if line not in hist_tests:
                 hist_tests.append(line)
         elif any(kw in line.lower() for kw in ['review', 'hw', 'due', 'project', 'presentation', 'peer', 'study guide', 'quiz']) and len(line) < 150:
@@ -415,22 +447,17 @@ def parse_all_subjects():
 
     # --------------------------------------------------------
     # 4. Mathematics — Algebra I (Mrs. Cluskey)
-    #    Single page, newest week listed first.
     # --------------------------------------------------------
     math_clean = clean_lines(raw_data['math']['lines'])
     math_tasks = []
     math_tests = []
     math_module = "Algebra I"
 
-    # Extract the latest week block
     week_block_raw = extract_current_week_block(math_clean, r'^Week\s+\d+')
-
-    # Merge fragmented date/lesson lines (e.g. "9/2", "8", "-", "Topic" → "9/28 - Topic")
     week_block = []
     i = 0
     while i < len(week_block_raw):
         line = week_block_raw[i]
-        # Standalone digit fragments (date pieces like "9/2", "8", "-")
         if re.match(r'^\d{1,2}(/\d{0,2})?$', line) or line == '-':
             merged = line
             i += 1
@@ -472,98 +499,111 @@ def parse_all_subjects():
 
     # --------------------------------------------------------
     # 5. Qur'an & Arabic (Mrs. Iman Luteify)
-    #    Single-week dedicated page — build structured summaries
     # --------------------------------------------------------
     quran_sublink = find_subpage_link(raw_data['quran']['links'], '8th')
-    quran_lines = raw_data['quran']['lines']
+    quran_lines = []
+    quran_links = []
     if quran_sublink:
         print(f"[SCRAPER] Found 8th Grade Qur'an current week link: {quran_sublink}")
-        sub_lines, _ = fetch_site_text(quran_sublink)
-        if sub_lines:
-            quran_lines = sub_lines
+        quran_lines, quran_links = fetch_site_text(quran_sublink)
+    else:
+        quran_lines = raw_data['quran']['lines']
+        quran_links = raw_data['quran']['links']
 
     quran_clean = clean_lines(quran_lines)
     quran_tasks = []
     quran_tests = []
-    week_title = "Q1 Week 8 (Sep 28 - Oct 2)"
+    week_title = "Quarter 1"
 
-    # Find week title
     for line in quran_clean:
         if re.search(r'Q\d+\s+Week\s+\d+', line, re.IGNORECASE):
             week_title = line
             break
 
-    # Build structured Qur'an summaries by scanning day-by-day
-    # Key patterns: حِفظ (Hifz), تِلَاوَة (Tilawah), الوَاجِبُ (homework), TEST, Quizlet, Wordwall
-    hifz_items = []      # memorization assignments
-    tilawah_items = []   # recitation/review
-    hw_items = []        # homework deadlines
-    arabic_items = []    # Arabic class items
+    # Detect Arabic Activity Platforms (Blooket, Quizlet, Wordwall, Worksheets, Book/Notebook)
+    arabic_platforms = []
+    for l in quran_links:
+        low_link = l.lower()
+        if 'blooket' in low_link and 'Blooket Game' not in arabic_platforms:
+            arabic_platforms.append('Blooket Game')
+        elif 'quizlet' in low_link and 'Quizlet Flashcards' not in arabic_platforms:
+            arabic_platforms.append('Quizlet Flashcards')
+        elif 'wordwall' in low_link and 'Wordwall Activity' not in arabic_platforms:
+            arabic_platforms.append('Wordwall Activity')
+
+    hifz_items = []
+    tilawah_items = []
+    arabic_items = []
+    hw_items = []
 
     i = 0
     while i < len(quran_clean):
         line = quran_clean[i]
+        low = line.lower()
 
-        # Hifz (memorization): حِفظ label followed by surah + ayah
+        if 'blooket' in low and 'Blooket Game' not in arabic_platforms:
+            arabic_platforms.append('Blooket Game')
+        if 'quizlet' in low and 'Quizlet Flashcards' not in arabic_platforms:
+            arabic_platforms.append('Quizlet Flashcards')
+        if 'wordwall' in low and 'Wordwall Activity' not in arabic_platforms:
+            arabic_platforms.append('Wordwall Activity')
+        if ('notebook' in low or 'book page' in low) and 'Book/Notebook Practice' not in arabic_platforms:
+            arabic_platforms.append('Book/Notebook Practice')
+
         if line in ('حِفظ',) and i + 1 < len(quran_clean):
             nxt = quran_clean[i + 1]
             ayah_part = ''
             if nxt.startswith(': Surah') or nxt.startswith(':  Surah'):
                 surah = nxt.lstrip(': ').strip()
-                # Look ahead for ayah range
                 if i + 2 < len(quran_clean) and 'Ayah' in quran_clean[i + 2]:
                     ayah_part = ' (' + quran_clean[i + 2].rstrip(')') + ')'
                 entry = f"Hifz: {surah}{ayah_part}"
                 if entry not in hifz_items:
                     hifz_items.append(entry)
 
-        # Test announcement
         if line == 'TEST:' and i + 1 < len(quran_clean):
             test_surah = quran_clean[i + 1]
             ayah_note = ''
-            # Look ahead for the Hadid ayah range (e.g. "Surah Al-\nHadid 22-24")
             for look in range(i + 2, min(i + 8, len(quran_clean))):
                 candidate = quran_clean[look]
-                # Match patterns like "Ayah 20-21", "21-20", or "Hadid 22-24"
                 ayah_match = re.search(r'(\d+[-–]\d+)', candidate)
                 if ayah_match:
                     ayah_note = f" (Ayah {ayah_match.group(1)})"
                     break
-            quran_tests.append(f"Qur'an Memorization Test (Thursday, Oct 1): {test_surah}{ayah_note}")
+            quran_tests.append(f"Qur'an Memorization Test (Thursday): {test_surah}{ayah_note}")
 
-        # Arabic homework (الوَاجِبُ المَنْزِلِيُّ)
-        if 'الوَاجِبُ' in line or 'Please c' in line or 'omplete three activities' in line:
-            hw_items.append('Arabic Homework: Complete 3 activities from Quizlet (آدَابُ الطَّعَامِ) — due Saturday, October 3rd')
+        if 'quiz' in low and ('vocabulary' in low or 'vocab' in low):
+            if line not in quran_tests:
+                quran_tests.append(line)
+        if 'test' in low and 'reading' in low:
+            if line not in quran_tests:
+                quran_tests.append(line)
 
-        # Quizlet / Wordwall tasks
         if 'Rules of Noon Sakinah' in line:
             arabic_items.append(f"Tajweed: {line}")
-        elif 'Wordwall:' in line:
-            arabic_items.append('Arabic Practice: Wordwall — أسئلة/سورة الحديد')
+        elif 'Wordwall:' in line or 'أسئلة/سورة' in line:
+            arabic_items.append(f"Arabic Practice: {line}")
 
-        # Friday recitation
-        if line == 'Surat Al-Kahf 1-20':
-            tilawah_items.append("Friday: Tilawah — Surat Al-Kahf (Ayah 1-20)")
+        if 'Surat Al-Kahf' in line or 'Kahf' in line:
+            if line not in tilawah_items and len(line) < 60:
+                tilawah_items.append(f"Friday: Tilawah — {line}")
 
-        # Arabic reading lesson
-        if 'آداب الطَّعَامِ' in line or 'Food etiquettes' in line:
-            if 'Arabic: Lesson — آداب الطَّعَامِ (Food Etiquettes)' not in arabic_items:
-                arabic_items.append('Arabic: Lesson — آداب الطَّعَامِ (Food Etiquettes)')
+        if 'آداب' in line or 'Food etiquettes' in line:
+            if 'Arabic Lesson — آداب الطَّعَامِ (Food Etiquettes)' not in arabic_items:
+                arabic_items.append('Arabic Lesson — آداب الطَّعَامِ (Food Etiquettes)')
 
         i += 1
 
-    # Build final clean task list
     if hifz_items:
-        # Deduplicate and take the latest hifz (highest ayah)
-        latest_hifz = hifz_items[-1] if hifz_items else None
-        if latest_hifz:
-            quran_tasks.append(latest_hifz)
+        quran_tasks.append(hifz_items[-1])
     if tilawah_items:
         for t in dict.fromkeys(tilawah_items):
             quran_tasks.append(t)
     if arabic_items:
         for a in dict.fromkeys(arabic_items):
             quran_tasks.append(a)
+    if arabic_platforms:
+        quran_tasks.append(f"Arabic Activity Platforms: {', '.join(arabic_platforms)}")
     if hw_items:
         for h in dict.fromkeys(hw_items):
             quran_tasks.append(h)
@@ -571,7 +611,6 @@ def parse_all_subjects():
     if not quran_tasks:
         quran_tasks = ["No explicit Qur'an & Arabic assignments posted for this week."]
 
-    # Deduplicate tests
     quran_tests = list(dict.fromkeys(quran_tests))
 
     extracted['week_title'] = week_title
@@ -584,7 +623,6 @@ def parse_all_subjects():
 
     # --------------------------------------------------------
     # 6. Islamic Studies (Ms. Mahmood)
-    #    Show ONLY: Tests / Homework / Projects
     # --------------------------------------------------------
     is_sublink = find_subpage_link(raw_data['is']['links'], '8th')
     is_lines = raw_data['is']['lines']
@@ -597,47 +635,27 @@ def parse_all_subjects():
     is_clean = clean_lines(is_lines)
     is_tasks = []
     is_tests = []
+    is_module = "Islamic Studies"
 
-    # Collect IS project/homework/due lines — consolidate "OPTION 1/2" blocks
-    project_lines = []
-    in_project = False
-    for line in is_clean:
-        if 'project due' in line.lower() or 'announcement' in line.lower():
-            in_project = True
-            if 'project due' in line.lower():
-                project_lines.append(line)
-        elif in_project:
-            if line in ('OPTION 1', 'OPTION', '2', 'OPTION 2'):
-                continue
-            elif any(kw in line.lower() for kw in ['make a', 'poster', 'names of allah', 'the name', 'its meaning', 'what it teaches', 'how knowing', 'reference from']):
-                project_lines.append(line)
-            elif line in ('MONDAY', 'WEDNESDAY', 'FRIDAY', 'Topic', 'Objective'):
-                in_project = False
-        if any(kw in line.lower() for kw in ['test', 'quiz', 'exam']) and len(line) < 150:
+    for idx, line in enumerate(is_clean):
+        low = line.lower()
+        if 'project due' in low or 'due wednesday' in low:
+            is_tasks.append(line)
+        elif line.startswith('OPTION ') or line.startswith('Option '):
+            details = line
+            if idx + 1 < len(is_clean) and len(is_clean[idx + 1]) < 120 and not is_clean[idx + 1].startswith('OPTION'):
+                details += ': ' + is_clean[idx + 1]
+            is_tasks.append(details)
+        elif 'test' in low or 'quiz' in low:
             if line not in is_tests:
                 is_tests.append(line)
 
-    # Consolidate project lines into clean entries
-    if project_lines:
-        # Find due date
-        due_line = next((l for l in project_lines if 'project due' in l.lower()), None)
-        if due_line:
-            is_tasks.append(due_line)
-        # Option 1
-        option1_lines = [l for l in project_lines if 'all 99 names' in l.lower()]
-        if option1_lines:
-            is_tasks.append('Option 1: Make a creative poster with all 99 names of Allah with English meaning')
-        # Option 2
-        option2_details = [l for l in project_lines if any(x in l.lower() for x in ['make a poster explaining', 'the name', 'its meaning', 'what it teaches', 'how knowing', 'reference from'])]
-        if option2_details:
-            is_tasks.append('Option 2: Make a poster explaining 1 name of Allah (include: The Name, Its Meaning, What it Teaches us, How it Affects Muslim Behavior, Reference from Qur\'an/Hadith)')
-
     if not is_tasks and not is_tests:
-        is_tasks = ["No explicit Islamic Studies homework or projects posted for this week."]
+        is_tasks = ["No explicit Islamic Studies assignments posted for this week."]
 
     extracted['subjects']['Islamic Studies'] = {
         'teacher': 'Ms. Mahmood',
-        'module': 'Tawheed — Asma was Sifaat',
+        'module': is_module,
         'tasks': is_tasks,
         'tests': is_tests
     }
@@ -656,21 +674,19 @@ def parse_all_subjects():
     comp_clean = clean_lines(comp_lines)
     comp_tasks = []
     comp_tests = []
-    comp_module = "Computers & Technology"
+    comp_module = "Computers"
 
     for line in comp_clean:
-        if any(kw in line.lower() for kw in ['learn by doing', 'lesson']) and len(line) < 80:
+        low = line.lower()
+        if any(kw in low for kw in ['learn by doing', 'lesson']) and len(line) < 80:
             comp_module = line
-            # Don't also add it as a task
             continue
-        if any(kw in line.lower() for kw in ['test', 'quiz', 'exam']) and len(line) < 150:
+        if any(kw in low for kw in ['test', 'quiz', 'exam']) and len(line) < 150:
             if line not in comp_tests:
                 comp_tests.append(line)
-        elif any(kw in line.lower() for kw in ['fast finisher', 'typing', 'nitro type', 'typing.com']) and len(line) < 180:
+        elif any(kw in low for kw in ['fast finisher', 'typing', 'nitro type', 'typing.com', 'edclub']) and len(line) < 180:
             if line not in comp_tasks:
                 comp_tasks.append(line)
-        elif line.lower() in ('resource', ':'):
-            pass  # skip lone noise lines
 
     if not comp_tasks and not comp_tests:
         comp_tasks = ["No explicit Computers assignments posted for this week."]
@@ -686,17 +702,5 @@ def parse_all_subjects():
 
 
 if __name__ == '__main__':
-    data = parse_all_subjects()
-    print("\n" + "=" * 60)
-    print("Scraped 8th Grade Subjects:", list(data['subjects'].keys()))
-    print("=" * 60)
-    for s_name, s_data in data['subjects'].items():
-        print(f"\n--- {s_name} ({s_data['teacher']}) ---")
-        print(f"  Module: {s_data.get('module', '')}")
-        print(f"  Tasks ({len(s_data.get('tasks', []))}):")
-        for t in s_data.get('tasks', []):
-            print(f"    • {t}")
-        print(f"  Tests ({len(s_data.get('tests', []))}):")
-        for t in s_data.get('tests', []):
-            print(f"    ⚠ {t}")
-    print(f"\nEvents: {data['upcoming_events']}")
+    import json
+    print(json.dumps(parse_all_subjects(), indent=2, ensure_ascii=False))

@@ -1,47 +1,37 @@
 {
-  "scrape_date": "2026-10-01 00:35",
+  "scrape_date": "2026-10-05 20:59",
+  "reference_date": "2026-10-05",
   "upcoming_events": [
-    "PTO Family Picnic [1:45PM-4:45PM]"
+    "PTO Family Picnic [1:45PM-4:45PM] Monday, Oct 5, 2026 -",
+    "Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)"
   ],
   "subjects": {
     "Science": {
       "teacher": "Mrs. Maoued",
-      "module": "Science",
+      "module": "Unit 1, L.1. The properties of Matter.",
       "tasks": [
-        "Start test review.",
-        "Study Guide",
-        "Blooket Practice",
-        "Unit test review.",
-        "IXL  Conduction, Convection, Radiation",
-        "Grow day."
+        "Workbook pages: 6-7.",
+        "IXL  E.1"
       ],
-      "tests": [
-        "Unit 2, L.2 quiz.",
-        "Unit 2 test."
-      ]
+      "tests": []
     },
     "Language Arts": {
       "teacher": "Mrs. Stewart / Ms. Carman",
-      "module": "Week 8 — September 28 - October 2",
+      "module": "Week 9 —  October 5 - 9",
       "tasks": [
         "Link to Figurative Language Examples! (You MUST get Ms. Carman's approval of your phrase to earn credit!)",
         "Homework: Finish and Submit Final Draft share with Ms. Carman by 11:59pm",
         "Classwork: Comprehension Check of"
       ],
       "tests": [
+        ": Vocab quiz and Film Viewing (TBD)",
         "Classwork: Vocabulary Quiz"
       ]
     },
     "US History II": {
       "teacher": "Ms. Anderson",
-      "module": "US History II",
-      "tasks": [
-        "GROUP PROJECT PEER REVIEW SHEET",
-        "Module 16 Study Guide Review",
-        "Peer Reflection HW due 09/29",
-        "Project/Presentation Review",
-        "Project/Presentation Due"
-      ],
+      "module": "Module 17 Lesson 1 Quiz",
+      "tasks": [],
       "tests": [
         "MODULE 16 TEST"
       ]
@@ -50,49 +40,53 @@
       "teacher": "Mrs. Cluskey",
       "module": "Algebra I",
       "tasks": [
-        "9/28-Indetifying Linear Functions",
-        "9/29- Slope of a Line",
-        "9/30- Slope of a Line",
-        "Practice",
-        "10/1- Slope-Intercept Form",
-        "10/2- Slope-Intercept Form Practice"
+        "10/5- Point",
+        "-Slope Form of a Line",
+        "10/6- Writing Linear Equations",
+        "10/7- S",
+        "pecial Linear Relationships",
+        "10/8- Review"
       ],
-      "tests": []
+      "tests": [
+        "10/9- Test"
+      ]
     },
     "Qur'an & Arabic": {
       "teacher": "Mrs. Iman Luteify",
-      "week": "DU QUR'AN & ARABIC - Q1 Week 8-  Sep 28 Oct 2",
+      "week": "DU QUR'AN & ARABIC - Q1 Week 9- Oct 05 -Oct 05",
       "tasks": [
         "Hifz: Surah Al-Hadid",
-        "Friday: Tilawah — Surat Al-Kahf (Ayah 1-20)",
+        "Friday: Tilawah — Surat Al-Kahf 1-20",
         "Tajweed: Rules of Noon Sakinah and Tanween Flashcards | Quizlet",
-        "Arabic Practice: Wordwall — أسئلة/سورة الحديد",
-        "Arabic: Lesson — آداب الطَّعَامِ (Food Etiquettes)",
-        "Arabic Homework: Complete 3 activities from Quizlet (آدَابُ الطَّعَامِ) — due Saturday, October 3rd"
+        "Arabic Practice: Wordwall:",
+        "Arabic Practice: أسئلة/سورة الحديد",
+        "Arabic Lesson — آداب الطَّعَامِ (Food Etiquettes)",
+        "Arabic Activity Platforms: Quizlet Flashcards, Wordwall Activity"
       ],
       "tests": [
-        "Qur'an Memorization Test (Thursday, Oct 1): Surah Al-Hadid (Ayah 21-20)"
+        "Qur'an Memorization Test (Thursday): Surah Al-Hadid",
+        "the reading Test will be ob"
       ]
     },
     "Islamic Studies": {
       "teacher": "Ms. Mahmood",
-      "module": "Tawheed — Asma was Sifaat",
+      "module": "Islamic Studies",
       "tasks": [
         "Project Due Wednesday 7th October",
-        "Option 1: Make a creative poster with all 99 names of Allah with English meaning",
-        "Option 2: Make a poster explaining 1 name of Allah (include: The Name, Its Meaning, What it Teaches us, How it Affects Muslim Behavior, Reference from Qur'an/Hadith)"
+        "OPTION 1: Make a creative poster with all 99 names of Allah with English meaning",
+        "OPTION 2: Make a poster explaining 1 name of Allah"
       ],
       "tests": []
     },
     "Computers": {
       "teacher": "Mrs. Mubeen Fatima",
-      "module": "Learn by doing Sheets",
+      "module": "Learn by doing Sheets latest version",
       "tasks": [
         "Fast Finisher",
-        "Do typing on nitro type or typing.com"
+        "Typing on Edclub or any typing website"
       ],
       "tests": []
     }
   },
-  "week_title": "DU QUR'AN & ARABIC - Q1 Week 8-  Sep 28 Oct 2"
+  "week_title": "DU QUR'AN & ARABIC - Q1 Week 9- Oct 05 -Oct 05"
 }
