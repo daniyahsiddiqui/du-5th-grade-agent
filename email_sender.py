@@ -80,17 +80,19 @@ def send_weekly_email(subject, html_content, text_content, recipient_override=No
     body_part.attach(MIMEText(clean_html, "html"))
     msg.attach(body_part)
 
-    # Attach file if provided and exists
-    if attachment_path and os.path.exists(attachment_path):
-        try:
-            with open(attachment_path, "rb") as f:
-                fname = os.path.basename(attachment_path)
-                part = MIMEApplication(f.read(), Name=fname)
-                part['Content-Disposition'] = f'attachment; filename="{fname}"'
-                msg.attach(part)
-                print(f"[EMAIL DISPATCH] Attached file '{fname}' to weekly email.")
-        except Exception as ea:
-            print(f"[EMAIL WARNING] Could not attach file {attachment_path}: {ea}")
+    # Attach files if provided and exist
+    attachments = attachment_path if isinstance(attachment_path, list) else ([attachment_path] if attachment_path else [])
+    for att in attachments:
+        if att and os.path.exists(att):
+            try:
+                with open(att, "rb") as f:
+                    fname = os.path.basename(att)
+                    part = MIMEApplication(f.read(), Name=fname)
+                    part['Content-Disposition'] = f'attachment; filename="{fname}"'
+                    msg.attach(part)
+                    print(f"[EMAIL DISPATCH] Attached file '{fname}' to weekly email.")
+            except Exception as ea:
+                print(f"[EMAIL WARNING] Could not attach file {att}: {ea}")
 
     try:
         if smtp_port == 465:
