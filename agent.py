@@ -23,7 +23,7 @@ def generate_pdf_from_html(html_path, pdf_path):
         try:
             cmd = [
                 chrome_path,
-                "--headless=new",
+                "--headless",
                 "--no-sandbox",
                 "--disable-gpu",
                 "--no-first-run",
@@ -31,7 +31,7 @@ def generate_pdf_from_html(html_path, pdf_path):
                 f"--print-to-pdf={pdf_path}",
                 f"file://{os.path.abspath(html_path)}"
             ]
-            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=25)
             print(f" Saved Printable PDF Report: {pdf_path}")
             return pdf_path
         except Exception as e:
@@ -44,7 +44,7 @@ def generate_png_from_html(html_path, png_path):
         try:
             cmd = [
                 chrome_path,
-                "--headless=new",
+                "--headless",
                 "--no-sandbox",
                 "--disable-gpu",
                 "--no-first-run",
@@ -53,7 +53,7 @@ def generate_png_from_html(html_path, png_path):
                 f"--screenshot={png_path}",
                 f"file://{os.path.abspath(html_path)}"
             ]
-            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=25)
             print(f" Saved Concise 1-Page PNG Report Graphic: {png_path}")
             return png_path
         except Exception as e:
