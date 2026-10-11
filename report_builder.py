@@ -95,10 +95,13 @@ def generate_markdown_report(data):
         if q_data.get('friday_recitation'):
             md.append(f"- [ ] 🕌 **Friday Surah Practice:** {q_data['friday_recitation']}")
         
-        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('arabic_platforms') or q_data.get('flashcards'):
+        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('arabic_platforms') or q_data.get('flashcards') or q_data.get('arabic_topics'):
             md.append("**📝 Arabic Class:**")
             if q_data.get('arabic_unit'):
                 md.append(f"- [ ] 📚 **Unit Title:** {q_data['arabic_unit']}")
+            if q_data.get('arabic_topics'):
+                for top in q_data['arabic_topics']:
+                    md.append(f"- [ ] 📝 **Lesson Focus:** {top}")
             if q_data.get('arabic_platforms'):
                 md.append(f"- [ ] 🎮 **Activity Platforms:** {', '.join(q_data['arabic_platforms'])}")
             if q_data.get('study_guide'):
@@ -430,13 +433,16 @@ def generate_html_report(data):
         html += """
             </ul>
 """
-        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('arabic_platforms') or q_data.get('flashcards'):
+        if q_data.get('arabic_unit') or q_data.get('study_guide') or q_data.get('arabic_platforms') or q_data.get('flashcards') or q_data.get('arabic_topics'):
             html += """
             <div style="font-weight: 700; color: #0f172a; margin-top: 12px; margin-bottom: 4px;">📝 Arabic Class:</div>
             <ul class="task-list">
 """
             if q_data.get('arabic_unit'):
                 html += f'<li class="task-item"><input type="checkbox"><div>📚 <strong>Unit Title:</strong> {q_data["arabic_unit"]}</div></li>'
+            if q_data.get('arabic_topics'):
+                for top in q_data['arabic_topics']:
+                    html += f'<li class="task-item"><input type="checkbox"><div>📝 <strong>Lesson Focus:</strong> {top}</div></li>'
             if q_data.get('arabic_platforms'):
                 html += f'<li class="task-item"><input type="checkbox"><div>🎮 <strong>Activity Platforms:</strong> {", ".join(q_data["arabic_platforms"])}</div></li>'
             if q_data.get('study_guide'):
@@ -628,8 +634,11 @@ def generate_dashboard_html_report(data, grade_name="5th Grade"):
             card_html += f'<li class="dash-task-item"><span class="check-box">🕌</span> <span><strong>Friday:</strong> {subj_data["friday_recitation"]}</span></li>'
         if subj_data.get('arabic_unit'):
             card_html += f'<li class="dash-task-item"><span class="badge badge-arabic">Arabic</span> <span><strong>Unit:</strong> {subj_data["arabic_unit"]}</span></li>'
+        if subj_data.get('arabic_topics'):
+            for top in subj_data['arabic_topics']:
+                card_html += f'<li class="dash-task-item dash-sub-item"><span class="check-box">📝</span> <span>{top}</span></li>'
         if subj_data.get('study_guide'):
-            card_html += f'<li class="dash-task-item"><span class="check-box">📝</span> <span>{subj_data["study_guide"]}</span></li>'
+            card_html += f'<li class="dash-task-item"><span class="check-box">📝</span> <span><strong>HW:</strong> {subj_data["study_guide"]}</span></li>'
         if subj_data.get('arabic_platforms'):
             card_html += f'<li class="dash-task-item"><span class="check-box">🎮</span> <span><strong>Platforms:</strong> {", ".join(subj_data["arabic_platforms"])}</span></li>'
 

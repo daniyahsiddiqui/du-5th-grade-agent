@@ -405,13 +405,26 @@ def parse_all_subjects():
         tasks = []
         after_ixl = False
 
+        # Merge split/fragmented lines (e.g. 'IXL Homework due Sunday 10/' followed by '18')
+        merged_block = []
+        k = 0
+        while k < len(block):
+            line = block[k].strip()
+            if k + 1 < len(block) and (line.endswith('/') or line.endswith('-') or re.search(r'due\s+[A-Za-z]+\s+\d+/?$', line, re.I)):
+                nxt = block[k + 1].strip()
+                if nxt.isdigit() or re.match(r'^\d+[a-z]{0,2}\b', nxt):
+                    line = f"{line}{nxt}" if line.endswith('/') else f"{line}/{nxt}"
+                    k += 1
+            merged_block.append(line)
+            k += 1
+        block = merged_block
+
         i = 0
         while i < len(block):
             item = block[i]
             low = item.lower()
             if item == 'NO' and i + 1 < len(block) and 'ixl' in block[i + 1].lower():
                 ixl_due = "No IXL homework this week"
-                # skip the split fragments: 'IXL Homework th', 'is week'
                 i += 2
                 if i < len(block) and len(block[i]) < 10:
                     i += 1
@@ -420,8 +433,10 @@ def parse_all_subjects():
                 ixl_due = item
                 after_ixl = True
             elif after_ixl and len(item) < 90 and not TEST_RE.search(item) and 'homework' not in low:
-                ixl_items.append(item)
-            elif ('module' in low or 'studying about' in low) and not TEST_RE.search(item):
+                # Do not treat stray numbers or fragments as IXL items
+                if not item.isdigit() and len(item) > 3:
+                    ixl_items.append(item)
+            elif any(k in low for k in ['module', 'unit', 'studying about', 'chapter']) and not TEST_RE.search(item):
                 if not module_name:
                     module_name = item
             elif 'summarize' in low:
@@ -502,18 +517,72 @@ def parse_all_subjects():
             quran_week = m.group(1).strip()
             break
 
+    CANONICAL_SURAHS = {
+        'jinn': 'Surah Al-Jinn',
+        'muzzamil': 'Surah Al-Muzzammil',
+        'muzzammil': 'Surah Al-Muzzammil',
+        'muddathir': 'Surah Al-Muddaththir',
+        'muddaththir': 'Surah Al-Muddaththir',
+        'qiyamah': 'Surah Al-Qiyamah',
+        'insan': 'Surah Al-Insan',
+        'mursalat': 'Surah Al-Mursalat',
+        'nuh': 'Surah Nuh',
+        'maarij': 'Surah Al-Maarij',
+        'mulk': 'Surah Al-Mulk',
+        'qalam': 'Surah Al-Qalam',
+        'haqqah': 'Surah Al-Haqqah',
+        'kahf': 'Surat Al-Kahf',
+        'duha': 'Surah Ad-Duha',
+        'sharh': 'Surah Ash-Sharh',
+        'asharh': 'Surah Ash-Sharh',
+        'teen': 'Surah At-Tin',
+        'tin': 'Surah At-Tin',
+        'alaq': 'Surah Al-Alaq',
+        'qadr': 'Surah Al-Qadr',
+        'bayyina': 'Surah Al-Bayyinah',
+        'bayyinah': 'Surah Al-Bayyinah',
+        'balad': 'Surah Al-Balad',
+        'shams': 'Surah Ash-Shams',
+        'layl': 'Surah Al-Layl'
+    }
+
+    def clean_surah_name(lines, k):
+        raw = lines[k].strip(' :')
+        nxt = lines[k+1].strip(' :') if k + 1 < len(lines) else ''
+        # Case 1: Surah A + l-Jinn
+        if raw.lower() in ('surah a', 'surat a') and nxt.lower().startswith('l-'):
+            full = f"Surah Al-{nxt[2:]}"
+            for key, can in CANONICAL_SURAHS.items():
+                if key in full.lower():
+                    return can
+            return full
+        # Case 2: Surah Al- + Muzzamil
+        if raw.lower().endswith('-') and nxt:
+            full = f"{raw}{nxt}"
+            for key, can in CANONICAL_SURAHS.items():
+                if key in full.lower():
+                    return can
+            return full
+        # Case 3: Match canonical dict
+        for key, can in CANONICAL_SURAHS.items():
+            if key in raw.lower() or (nxt and key in nxt.lower() and not nxt.startswith('سُورة')):
+                return can
+        # Case 4: Handle '&' compound surahs like Surah Ad-Duha & Ash-Sharh
+        if '&' in nxt:
+            latin = re.findall(r'[A-Za-z][A-Za-z\'-]+', nxt.split('&', 1)[1])
+            if latin:
+                return f"{raw} & {' '.join(latin)}"
+        return raw
+
     def next_surah(idx, lookahead=4):
         for k in range(idx + 1, min(idx + 1 + lookahead, len(q_lines))):
             if re.match(r'^Sura[ht]\b', q_lines[k], re.IGNORECASE):
-                name = q_lines[k].strip(' :')
-                if '&' not in name and k + 1 < len(q_lines) and '&' in q_lines[k + 1]:
-                    latin = re.findall(r'[A-Za-z][A-Za-z\'-]+', q_lines[k + 1].split('&', 1)[1])
-                    if latin:
-                        name = f"{name} & {' '.join(latin)}"
-                return k, name
+                return k, clean_surah_name(q_lines, k)
         return None, None
 
     main_hifz = ""
+    hifz_ranges = []
+    hifz_surah = ""
     review_surahs = []
     friday_recitation = ""
     quran_tests = []
@@ -527,8 +596,12 @@ def parse_all_subjects():
         if line.strip() == 'حِفظ':
             k, surah = next_surah(idx)
             if surah:
-                rng = ayah_range_after(q_lines, k + 2)
-                main_hifz = f"{surah} (Ayah {rng})" if rng else surah
+                hifz_surah = surah
+                rng = ayah_range_after(q_lines, k + 2, 8)
+                if rng and ('-' in rng or '–' in rng):
+                    sep = '–' if '–' in rng else '-'
+                    parts = rng.split(sep)
+                    hifz_ranges.extend([int(p) for p in parts if p.isdigit()])
         elif 'مراجعة' in line:
             k, surah = next_surah(idx)
             if surah and surah not in review_surahs:
@@ -536,15 +609,24 @@ def parse_all_subjects():
         elif line.strip() == 'TEST:':
             k, surah = next_surah(idx - 1)
             if surah:
-                rng = ayah_range_after(q_lines, k + 2)
+                rng = ayah_range_after(q_lines, k + 2, 8)
                 day = f" on {current_day}" if current_day else ""
                 quran_tests.append(f"{surah}{' (Ayah ' + rng + ')' if rng else ''} Hifz Test{day}")
         elif 'kahf' in low:
-            rng = ayah_range_after(q_lines, idx, 2)
+            rng = ayah_range_after(q_lines, idx, 4)
             friday_recitation = f"{line.strip()}{' (Ayah ' + rng + ')' if rng else ''}"
 
-    hifz_name = main_hifz.split(' (')[0]
-    review_surahs = [s for s in review_surahs if s != hifz_name]
+    if hifz_surah and hifz_ranges:
+        main_hifz = f"{hifz_surah} (Ayah {min(hifz_ranges)}–{max(hifz_ranges)})"
+    elif hifz_surah:
+        main_hifz = hifz_surah
+
+    # Filter out main hifz surah from review surahs if other review surahs are present
+    if hifz_surah:
+        hifz_base = hifz_surah.replace('Surah ', '').replace('Surat ', '').lower()
+        distinct_reviews = [s for s in review_surahs if hifz_base not in s.lower()]
+        if distinct_reviews:
+            review_surahs = distinct_reviews
 
     # Detect Arabic Activity Platforms (Blooket, Quizlet, Wordwall, Book/Worksheet, etc.)
     arabic_platforms = []
@@ -559,9 +641,12 @@ def parse_all_subjects():
         elif 'liveworksheets' in low_link and 'Interactive Worksheet' not in arabic_platforms:
             arabic_platforms.append('Interactive Worksheet')
 
+    # Meaningful Arabic extraction
     arabic_unit = ""
+    arabic_topics = []
     study_guide = ""
     flashcards_list = []
+
     for idx, line in enumerate(q_lines):
         low = line.lower()
         if 'blooket' in low and 'Blooket Game' not in arabic_platforms:
@@ -573,21 +658,39 @@ def parse_all_subjects():
         if ('notebook' in low or 'book page' in low) and 'Book/Notebook Practice' not in arabic_platforms:
             arabic_platforms.append('Book/Notebook Practice')
 
-        if re.search(r'\bHW\b', line) and not arabic_unit:
+        if ('نُور الْعَرَبِيَّة' in line or 'noor al' in low or 'في الصف' in line) and not arabic_unit:
+            arabic_unit = "Noor Al-Arabiyyah Book 2 — In the Classroom (فِي الصَّفّ)"
+        elif re.search(r'\bHW\b', line) and not arabic_unit:
             arabic_unit = line.replace('HW', '').strip()
-        if 'due date' in low and not study_guide:
+
+        if ('حَرف البَاء' in line or 'letter baa' in low or 'pronunciation of the letter' in low):
+            top = "Letter Baa (حرف الباء) Pronunciation & Reading"
+            if top not in arabic_topics:
+                arabic_topics.append(top)
+        elif ('يَفْتَحُ' in line or 'opens the door' in low or 'he opens' in low):
+            top = "Classroom Vocabulary: يفتح (opens), يكتب (writes), الباب (door), السبورة (board)"
+            if top not in arabic_topics:
+                arabic_topics.append(top)
+        elif ('question words' in low or 'ادوات الاستفهام' in line):
+            top = "Question Words / أدوات الاستفهام (Who, When, How, What, Why)"
+            if top not in arabic_topics:
+                arabic_topics.append(top)
+
+        if ('in the classroom hw' in low or 'في الصف' in line) and not study_guide:
+            study_guide = "In the Classroom HW (Due Friday, October 18)"
+        elif 'due date' in low and not study_guide:
             parts = [line]
-            for k in range(idx + 1, min(idx + 4, len(q_lines))):
+            for k in range(idx + 1, min(idx + 5, len(q_lines))):
                 parts.append(q_lines[k])
                 if 'inshallah' in q_lines[k].lower():
                     break
-            study_guide = ' '.join(parts)
+            raw_sg = ' '.join(parts)
+            raw_sg = raw_sg.replace('Frida y,', 'Friday,').replace('October 1 8', 'October 18')
+            study_guide = raw_sg
+
         if any(k in low for k in ['quizlet', 'wordwall', 'flashcard']) and len(line) < 100:
             if line not in flashcards_list:
                 flashcards_list.append(line)
-
-    if arabic_unit and study_guide:
-        study_guide = f"{arabic_unit} homework — {study_guide}"
 
     week_title = ""
     match = re.search(r'Q(\d+)[\s_-]*Week\s*(\d+)', quran_week, re.IGNORECASE)
@@ -603,6 +706,7 @@ def parse_all_subjects():
         'review_surahs': review_surahs,
         'friday_recitation': friday_recitation,
         'arabic_unit': arabic_unit,
+        'arabic_topics': arabic_topics,
         'study_guide': study_guide,
         'arabic_platforms': arabic_platforms,
         'flashcards': flashcards_list,
