@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DU 5th Grade Weekly Digest & Checklist</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
+        .header {
+            border-bottom: 3px solid #0284c7;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 { margin: 0; color: #0f172a; font-size: 24px; }
+        .header .week-badge {
+            font-size: 16px; font-weight: 800; color: #1e3a8a; background: #e0f2fe;
+            border-left: 4px solid #0284c7; padding: 4px 12px; border-radius: 4px;
+            margin: 8px 0 6px 0; display: inline-block;
+        }
+        .header .meta { color: #64748b; font-size: 14px; margin-top: 5px; }
+        .print-btn {
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .print-btn:hover {
+            background-color: #0369a1;
+        }
+        .section { margin-bottom: 25px; }
+        .section-title {
+            font-size: 18px; font-weight: 700; color: #0f172a;
+            border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; margin-bottom: 15px;
+        }
+        .alert-box {
+            background-color: #fef2f2; border-left: 4px solid #ef4444;
+            padding: 12px 16px; border-radius: 6px; margin-bottom: 20px;
+        }
+        .alert-box h3 { margin: 0 0 6px 0; color: #991b1b; font-size: 16px; }
+        .subject-card {
+            background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 8px; padding: 15px; margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+        .subject-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+        }
+        .subject-name { font-size: 16px; font-weight: 700; color: #0284c7; }
+        .teacher-name { font-size: 13px; color: #64748b; font-style: italic; }
+        .topic-tag {
+            display: inline-block; background: #e0f2fe; color: #0369a1;
+            font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px;
+        }
+        .ixl-badge {
+            background: #dbeafe; color: #1e40af; font-size: 11px; font-weight: 700;
+            padding: 2px 6px; border-radius: 4px; text-transform: uppercase;
+        }
+        .deltamath-badge {
+            background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700;
+            padding: 2px 6px; border-radius: 4px; text-transform: uppercase;
+        }
+        .task-list { list-style: none; padding: 0; margin: 0; }
+        .task-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 6px 0; font-size: 14px; border-bottom: 1px dashed #f1f5f9;
+        }
+        .task-item input[type="checkbox"] {
+            width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: #0284c7;
+        }
+        .sub-task-list { padding-left: 28px; list-style: none; margin: 4px 0; }
+        .spelling-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px; background: #f1f5f9; padding: 12px; border-radius: 6px;
+        }
+        .spelling-word { font-size: 13px; font-weight: 600; color: #334155; }
+        .footer {
+            text-align: center; font-size: 12px; color: #94a3b8;
+            margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 15px;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+            .subject-card { border: 1px solid #cbd5e1; margin-bottom: 10px; padding: 10px; }
+            .no-print, .print-btn { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h1>📋 DU 5th Grade Weekly Digest & Student Checklist</h1>
+                    <div class="week-badge">🗓️ Quarter 2 Week 10</div>
+                    <div class="meta"><strong>Report Date:</strong> 2026-10-11 18:33 | Weekly Homework & Test Tracker</div>
+                </div>
+                <button class="print-btn no-print" onclick="window.print()" title="Print Report">
+                    🖨️ Print Report
+                </button>
+            </div>
+        </div>
+
+        <!-- High Priority Alerts -->
+        <div class="alert-box">
+            <h3>🚨 Upcoming Tests & Important Deadlines</h3>
+            <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #7f1d1d;">
+<li><strong>Qur'an & Arabic:</strong> Surah Al-Maarij (Ayah 11–18) Hifz Test on Wednesday</li>
+            </ul>
+        </div>
+
+        <!-- Weekly Student Checklist -->
+        <div class="section">
+            <div class="section-title">🔲 Weekly Student Homework Checklist</div>
+
+        <div class="subject-card">
+            <div class="subject-header">
+                <span class="subject-name">Language Arts</span>
+                <span class="teacher-name">Mrs. Tasneim Khalifa</span>
+            </div>
+            <div class="topic-tag">Unit/Module: Language Arts</div>
+            <ul class="task-list">
+
+                <li class="task-item">
+                    <input type="checkbox">
+                    <div><span class="ixl-badge">🎯 IXL Homework</span> <strong>4 IXL(s) Assigned (IXL Homework due Sunday 10/18)</strong></div>
+                </li>
+                <ul class="sub-task-list">
+<li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Analyze plot elements</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Determine the themes of short stories</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Compare and contrast characters</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Summarize a story</div></li></ul></ul></div>
+            <div class="subject-card">
+                <div class="subject-header">
+                    <span class="subject-name">Science</span>
+                    <span class="teacher-name">Mrs. Tasneim Khalifa</span>
+                </div>
+                <div class="topic-tag">Module: Science</div>
+                <ul class="task-list">
+
+                    <li class="task-item">
+                        <input type="checkbox">
+                        <div><span class="ixl-badge">🎯 IXL Homework</span> <strong>4 IXL(s) Assigned (IXL Homework due Sunday 10/)</strong></div>
+                    </li>
+                    <ul class="sub-task-list">
+<li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> 18</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Identify reactants and products</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Classify fruits and vegetables as plant parts</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Describe ecosystems</div></li></ul></ul></div>
+            <div class="subject-card">
+                <div class="subject-header">
+                    <span class="subject-name">Social Studies</span>
+                    <span class="teacher-name">Mrs. Tasneim Khalifa</span>
+                </div>
+                <div class="topic-tag">Module: We will continue studying about the first Peoples of America</div>
+                <ul class="task-list">
+<li class="task-item"><input type="checkbox"><div>🎬 Watch and summarize the video in 500 words</div></li>
+                    <li class="task-item">
+                        <input type="checkbox">
+                        <div><span class="ixl-badge">🎯 IXL Homework</span> <strong>3 IXL(s) Assigned (IXL Homework due Sunday 10/18)</strong></div>
+                    </li>
+                    <ul class="sub-task-list">
+<li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Read a map: cardinal directions</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Identify the 50 states</div></li><li class="task-item"><input type="checkbox"><div><span class="ixl-badge">IXL</span> Native people of the Southwest</div></li></ul></ul></div>
+        <div class="subject-card">
+            <div class="subject-header">
+                <span class="subject-name">Mathematics</span>
+                <span class="teacher-name">Mrs. Hiba Naffakh</span>
+            </div>
+            <div class="topic-tag">Module: Mathematics</div>
+            <ul class="task-list">
+</ul></div>
+        <div class="subject-card">
+            <div class="subject-header">
+                <span class="subject-name">Qur'an & Arabic</span>
+                <span class="teacher-name">Mrs. Iman Luteify</span>
+            </div>
+<div class="topic-tag">Active Week: Q2 Week 10- Oct 12- 14</div>
+            <div style="font-weight: 700; color: #0f172a; margin-top: 8px; margin-bottom: 4px;">📖 Qur'an (Hifz & Recitation):</div>
+            <ul class="task-list">
+<li class="task-item"><input type="checkbox"><div>🎯 <strong>Main Hifz Assignment:</strong> Surah Al-Maarij (Ayah 14–18)</div></li><li class="task-item"><input type="checkbox"><div>📖 <strong>Weekly Review Surahs:</strong> Surah Nuh, Surah A, Surah Al-</div></li>
+            </ul>
+
+            <div style="font-weight: 700; color: #0f172a; margin-top: 12px; margin-bottom: 4px;">📝 Arabic Class:</div>
+            <ul class="task-list">
+<li class="task-item"><input type="checkbox"><div>📚 <strong>Unit Title:</strong> In the Classroom</div></li><li class="task-item"><input type="checkbox"><div>🎮 <strong>Activity Platforms:</strong> Wordwall Activity, Blooket Game</div></li><li class="task-item"><input type="checkbox"><div>📝 <strong>Homework:</strong> In the Classroom homework — Due date for the above activity is Frida y, October 1 8</div></li></ul></div>
+        <div class="subject-card">
+            <div class="subject-header">
+                <span class="subject-name">Islamic Studies</span>
+                <span class="teacher-name">Mrs. Mubeen Fatima</span>
+            </div>
+<div class="topic-tag">Chapter: Belief in Prophets and Messengers</div><ul class="task-list"><li class="task-item"><input type="checkbox"><div>📝 Project on Prophets of Allah</div></li></ul></div>
+        <div class="subject-card">
+            <div class="subject-header">
+                <span class="subject-name">Computers</span>
+                <span class="teacher-name">Mrs. Mubeen Fatima</span>
+            </div>
+<ul class="task-list">
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📢 School Announcements & Upcoming Events</div>
+            <ul style="padding-left: 20px; font-size: 14px;">
+
+        <div class="footer">
+            Darul Uloom 5th Grade Automated Weekly Agent • Generated on demand
+        </div>
+    </div>
+</body>
+</html>

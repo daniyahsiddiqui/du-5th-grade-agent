@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080">
+    <title>DU 5th Grade Weekly Dashboard</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            margin: 0;
+            padding: 24px;
+            color: #1e293b;
+            width: 1080px;
+        }
+        .dashboard {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-title h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+        .header-title p {
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: #93c5fd;
+            font-weight: 500;
+        }
+        .header-badge {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-align: right;
+        }
+        .header-badge .grade {
+            font-size: 16px;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+        .header-badge .date {
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-top: 2px;
+        }
+        
+        .alert-card {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            border-left: 6px solid #e11d48;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+        }
+        .alert-title {
+            color: #9f1239;
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .alert-list {
+            margin: 0;
+            padding-left: 20px;
+            color: #881337;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .alert-list li {
+            margin-bottom: 4px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .dash-card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            break-inside: avoid;
+            margin-bottom: 18px;
+        }
+        .dash-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+        .dash-subj-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .dash-teacher {
+            font-size: 12px;
+            color: #64748b;
+            font-style: italic;
+        }
+        .dash-module-pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .dash-task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .dash-task-item {
+            font-size: 13px;
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            line-height: 1.4;
+        }
+        .dash-task-item:last-child {
+            border-bottom: none;
+        }
+        .dash-sub-item {
+            padding-left: 20px;
+            color: #475569;
+            font-size: 12px;
+        }
+        .check-box {
+            color: #0284c7;
+            font-weight: bold;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+        }
+        .badge-ixl { background: #dbeafe; color: #1e40af; }
+        .badge-deltamath { background: #fef3c7; color: #92400e; }
+        .badge-hifz { background: #d1fae5; color: #065f46; }
+        .badge-arabic { background: #fee2e2; color: #991b1b; }
+
+        .spelling-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #6366f1;
+            margin-top: 6px;
+        }
+        .spelling-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        .spelling-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .spelling-word {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .events-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #0ea5e9;
+            margin-top: 18px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div class="header-title">
+                <h1>📋 DU WEEKLY STUDENT DASHBOARD</h1>
+                <p>Darul Uloom Academy • Weekly Digest & Homework Tracker</p>
+            </div>
+            <div class="header-badge">
+                <div class="grade">5th Grade</div>
+                <div class="date">Quarter 2 Week 10 | 2026-10-11 18:33</div>
+            </div>
+        </div>
+
+        
+        <div class="alert-card">
+            <div class="alert-title">🚨 Upcoming Tests & High Priority Deadlines</div>
+            <ul class="alert-list">
+                <li><strong>Qur'an & Arabic:</strong> Surah Al-Maarij (Ayah 11–18) Hifz Test on Wednesday</li>
+            </ul>
+        </div>
+        
+
+        <div class="grid">
+            <div class="column">
+                
+        <div class="dash-card" style="border-top: 4px solid #2563eb;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Language Arts</span>
+                <span class="dash-teacher">Mrs. Tasneim Khalifa</span>
+            </div>
+        <ul class="dash-task-list"><li class="dash-task-item"><span class="badge badge-ixl">IXL</span> <strong>4 IXL Skill(s) Assigned (IXL Homework due Sunday 10/18)</strong></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Analyze plot elements</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Determine the themes of short stories</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Compare and contrast characters</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Summarize a story</span></li></ul></div>
+        <div class="dash-card" style="border-top: 4px solid #7c3aed;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Science</span>
+                <span class="dash-teacher">Mrs. Tasneim Khalifa</span>
+            </div>
+        <ul class="dash-task-list"><li class="dash-task-item"><span class="badge badge-ixl">IXL</span> <strong>4 IXL Skill(s) Assigned (IXL Homework due Sunday 10/)</strong></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>18</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Identify reactants and products</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Classify fruits and vegetables as plant parts</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Describe ecosystems</span></li></ul></div>
+        <div class="dash-card" style="border-top: 4px solid #0284c7;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Social Studies</span>
+                <span class="dash-teacher">Mrs. Tasneim Khalifa</span>
+            </div>
+        <div class="dash-module-pill" style="background: #e0f2fe; color: #075985;">We will continue studying about the first Peoples of America</div><ul class="dash-task-list"><li class="dash-task-item"><span class="check-box">🎬</span> <span>Watch and summarize the video in 500 words</span></li><li class="dash-task-item"><span class="badge badge-ixl">IXL</span> <strong>3 IXL Skill(s) Assigned (IXL Homework due Sunday 10/18)</strong></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Read a map: cardinal directions</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Identify the 50 states</span></li><li class="dash-task-item dash-sub-item"><span class="check-box">☐</span> <span>Native people of the Southwest</span></li></ul></div>
+        <div class="dash-card" style="border-top: 4px solid #059669;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Mathematics</span>
+                <span class="dash-teacher">Mrs. Hiba Naffakh</span>
+            </div>
+        <ul class="dash-task-list"><li class="dash-task-item" style="color: #94a3b8; font-style: italic;">No explicit homework items listed for this week.</li></ul></div>
+            </div>
+            <div class="column">
+                
+        <div class="dash-card" style="border-top: 4px solid #d97706;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Qur'an & Arabic</span>
+                <span class="dash-teacher">Mrs. Iman Luteify</span>
+            </div>
+        <div class="dash-module-pill" style="background: #fef3c7; color: #92400e;">In the Classroom</div><ul class="dash-task-list"><li class="dash-task-item"><span class="badge badge-hifz">Hifz</span> <strong>Surah Al-Maarij (Ayah 14–18)</strong></li><li class="dash-task-item"><span class="check-box">📖</span> <span><strong>Review:</strong> Surah Nuh, Surah A, Surah Al-</span></li><li class="dash-task-item"><span class="badge badge-arabic">Arabic</span> <span><strong>Unit:</strong> In the Classroom</span></li><li class="dash-task-item"><span class="check-box">📝</span> <span>In the Classroom homework — Due date for the above activity is Frida y, October 1 8</span></li><li class="dash-task-item"><span class="check-box">🎮</span> <span><strong>Platforms:</strong> Wordwall Activity, Blooket Game</span></li></ul></div>
+        <div class="dash-card" style="border-top: 4px solid #4f46e5;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Islamic Studies</span>
+                <span class="dash-teacher">Mrs. Mubeen Fatima</span>
+            </div>
+        <div class="dash-module-pill" style="background: #e0e7ff; color: #3730a3;">Belief in Prophets and Messengers</div><ul class="dash-task-list"><li class="dash-task-item"><span class="check-box">📝</span> <span>Project on Prophets of Allah</span></li></ul></div>
+        <div class="dash-card" style="border-top: 4px solid #06b6d4;">
+            <div class="dash-card-header">
+                <span class="dash-subj-name">Computers</span>
+                <span class="dash-teacher">Mrs. Mubeen Fatima</span>
+            </div>
+        <ul class="dash-task-list"><li class="dash-task-item" style="color: #94a3b8; font-style: italic;">No explicit homework items listed for this week.</li></ul></div>
+                
+                
+        <div class="events-box">
+            <div class="spelling-title">📢 School Announcements & Upcoming Events</div>
+            <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #334155;">
+                <li style="margin-bottom: 4px;">🗓️ Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]</li><li style="margin-bottom: 4px;">🗓️ Monday, Oct 5, 2026 – Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)</li><li style="margin-bottom: 4px;">🗓️ Thursday, Oct 15 – School Improvement, No school for Students</li><li style="margin-bottom: 4px;">🗓️ Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM</li><li style="margin-bottom: 4px;">🗓️ Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students</li><li style="margin-bottom: 4px;">🗓️ Wednesday, October 21, 2026 – Unity Day - Wear orange</li><li style="margin-bottom: 4px;">🗓️ Dear parents, please use the following link to sign up for Parent/Teacher conferences.</li><li style="margin-bottom: 4px;">🗓️ I am looking forward to meeting all of you to discuss your student's progress this year.</li><li style="margin-bottom: 4px;">🗓️ https://calendly.com/khalifat-dupeoria/15min</li><li style="margin-bottom: 4px;">🗓️ Ps: Students, Please remember to bring a Black Ultra Fine Point Sharpie for Art Class!</li>
+            </ul>
+        </div>
+        
+            </div>
+        </div>
+
+        <div class="footer">
+            Darul Uloom Automated Weekly Agent • 1-Page PNG Graphic Summary
+        </div>
+    </div>
+</body>
+</html>
