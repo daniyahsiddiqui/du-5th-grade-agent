@@ -1,117 +1,85 @@
 {
-  "scrape_date": "2026-10-11 18:33",
+  "scrape_date": "2026-10-11 18:42",
   "reference_date": "2026-10-12",
   "upcoming_events": [
-    "Saturday, Oct 3, 2026 – PTO Family Picnic [1:45PM-4:45PM]",
-    "Monday, Oct 5, 2026 – Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)",
-    "Thursday, Oct 15 – School Improvement, No school for Students",
-    "Thursday, Oct 15 – Parent Teachers Conference, 11:30AM - 3:30PM",
-    "Friday, Oct 16 – Parent Teachers Conference, 8:00AM-12:00PM, No school for Students",
-    "Wednesday, October 21, 2026 – Unity Day - Wear orange",
-    "Dear parents, please use the following link to sign up for Parent/Teacher conferences.",
-    "I am looking forward to meeting all of you to discuss your student's progress this year.",
-    "https://calendly.com/khalifat-dupeoria/15min",
-    "Ps: Students, Please remember to bring a Black Ultra Fine Point Sharpie for Art Class!"
+    "PTO Family Picnic [1:45PM-4:45PM] Monday, Oct 5, 2026 -",
+    "Picture Retake Day (ONLY for students and staff who were absent or missed the original picture day.)"
   ],
   "subjects": {
-    "Language Arts": {
-      "template_type": "ela",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Language Arts",
-      "week_header": "W 10 OCTOBER 12 - OCTOBER 16 :",
-      "writing_tasks": [],
-      "ixl_due": "IXL Homework due Sunday 10/18",
-      "ixl_items": [
-        "Analyze plot elements",
-        "Determine the themes of short stories",
-        "Compare and contrast characters",
-        "Summarize a story"
-      ],
-      "spelling_title": "",
-      "spelling_words": [],
-      "tests": []
-    },
     "Science": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Science",
-      "week_header": "W10 OCTOBER 12 - OCTOBER 16 :",
-      "video_summary": "",
-      "ixl_due": "IXL Homework due Sunday 10/",
-      "ixl_items": [
-        "18",
-        "Identify reactants and products",
-        "Classify fruits and vegetables as plant parts",
-        "Describe ecosystems"
+      "teacher": "Mrs. Maoued",
+      "module": "Unit 1, L.1. The properties of Matter.",
+      "tasks": [
+        "Workbook pages: 14-16",
+        "Homework: Pages 20-21.",
+        "Lesson 1 review and quiz."
       ],
-      "tasks": [],
       "tests": []
     },
-    "Social Studies": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "We will continue studying about the first Peoples of America",
-      "week_header": "W 10 OCTOBER 12 - OCTOBER 16 :",
-      "video_summary": "Watch and summarize the video in 500 words",
-      "ixl_due": "IXL Homework due Sunday 10/18",
-      "ixl_items": [
-        "Read a map: cardinal directions",
-        "Identify the 50 states",
-        "Native people of the Southwest"
+    "Language Arts": {
+      "teacher": "Mrs. Stewart / Ms. Carman",
+      "module": "Week 9 —  October 5 - 9",
+      "tasks": [
+        "Link to Figurative Language Examples! (You MUST get Ms. Carman's approval of your phrase to earn credit!)",
+        "Homework: Finish and Submit Final Draft share with Ms. Carman by 11:59pm",
+        "Classwork: Comprehension Check of"
       ],
-      "tasks": [],
+      "tests": [
+        ": Vocab quiz",
+        "Classwork: Vocabulary Quiz"
+      ]
+    },
+    "US History II": {
+      "teacher": "Ms. Anderson",
+      "module": "US History II",
+      "tasks": [
+        "No explicit History assignments posted for this week."
+      ],
       "tests": []
     },
-    "Mathematics": {
-      "template_type": "math",
-      "teacher": "Mrs. Hiba Naffakh",
-      "module": "Mathematics",
-      "has_deltamath": false,
-      "ixl_codes": [],
+    "Mathematics (Algebra I)": {
+      "teacher": "Mrs. Cluskey",
+      "module": "Algebra I",
+      "tasks": [
+        "10/12- Solving Linear Equations (Variable on One Side)",
+        "10/13- Solving Linear Equations (Variables on Two",
+        "Sides)",
+        "10/14-Solving Linear Equations Practice",
+        "10/15- No School (Parent Teacher Conferences",
+        "10/16- No School (Parent Teacher Conferences)"
+      ],
       "tests": []
     },
     "Qur'an & Arabic": {
-      "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
-      "week": "Q2 Week 10- Oct 12- 14",
-      "main_hifz": "Surah Al-Maarij (Ayah 14–18)",
-      "review_surahs": [
-        "Surah Nuh",
-        "Surah A",
-        "Surah Al-"
+      "week": "DU QUR'AN & ARABIC - Q2 Week 10- Oct 12-14",
+      "tasks": [
+        "Hifz: Surah Al-Hadid",
+        "Arabic Lesson — آداب الطَّعَامِ (Food Etiquettes)",
+        "Arabic Activity Platforms: Quizlet Flashcards"
       ],
-      "friday_recitation": "",
-      "arabic_unit": "In the Classroom",
-      "study_guide": "In the Classroom homework — Due date for the above activity is Frida y, October 1 8",
-      "arabic_platforms": [
-        "Wordwall Activity",
-        "Blooket Game"
-      ],
-      "flashcards": [],
       "tests": [
-        "Surah Al-Maarij (Ayah 11–18) Hifz Test on Wednesday"
+        "Qur'an Memorization Test (Thursday): Surah Al-Hadid (Ayah 27-25)"
       ]
     },
     "Islamic Studies": {
-      "template_type": "is",
-      "teacher": "Mrs. Mubeen Fatima",
-      "chapter_topic": "Belief in Prophets and Messengers",
-      "subtopics": [],
-      "workbook_task": "",
-      "presentation_task": "",
-      "tasks": [
-        "Project on Prophets of Allah"
-      ],
-      "tests": []
+      "teacher": "Ms. Mahmood",
+      "module": "Islamic Studies",
+      "tasks": [],
+      "tests": [
+        "QUIZ",
+        "Complete the Quiz Team work (not open book)",
+        "Tawheed Quiz (G8)"
+      ]
     },
     "Computers": {
-      "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "tech_topic": "",
-      "edclub_task": "",
-      "typing_task": "",
+      "module": "Computers",
+      "tasks": [
+        "No explicit Computers assignments posted for this week."
+      ],
       "tests": []
     }
   },
-  "week_title": "Quarter 2 Week 10"
+  "week_title": "DU QUR'AN & ARABIC - Q2 Week 10- Oct 12-14"
 }
