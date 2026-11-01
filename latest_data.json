@@ -1,129 +1,93 @@
 {
-  "scrape_date": "2026-11-01 18:42",
+  "scrape_date": "2026-11-01 18:48",
   "reference_date": "2026-11-02",
   "upcoming_events": [
-    "Friday, Oct 30 - DU/ICP Community Vaccine Clinic  [12:00-12:30PM – for DU Staff and Students; 2:00PM onwards – for general community] – DU/ICP, in partnership with Walgreens, will host a Community Vaccine Clinic on Friday, October 30, in the school gym. Flu vaccines will be available, including free flu shots for uninsured individuals through Walgreens vouchers. Additional vaccines may be available based on eligibility and insurance coverage.",
-    "Attendees are encouraged to bring their insurance card, photo ID, and vaccination records, if available. Female immunizers are expected to be onsite. Staff are welcome to attend and encouraged to share this opportunity with family and community members.",
-    "If you are interested in this opportunity, please fill out this participation and consent form -",
-    "Community Vaccine Clinic Oct 30  – Fill out form – Monday, Nov 16 -",
-    "Arabic Spelling Bee, Grade 1-3",
-    "Monday, Nov 16 – Arabic Spelling Bee, Grade 4-8, Elimination rounds",
-    "Friday, Nov 20 – - Arabic Spelling Bee, Grade 4-8, Final rounds",
-    "Friday, Nov 20 – - Family Reading Night, 6:00-8:00PM",
-    "We look forward to your involvement in making this Family Reading Night a memorable and successful event!",
-    "Please plan on attending as our class is presenting a play to the audience!",
-    "Date: Friday, Nov 20, 2026 – Timings: 6:00pm-8:00pm",
-    "Theme: \"Rainforest: Rooted in Nature\"",
-    "Wednesday, Nov 25 - Friday, Nov 27 – - Fall Break"
+    "No explicit upcoming school events posted for this week."
   ],
   "subjects": {
-    "Language Arts": {
-      "template_type": "ela",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Language Arts",
-      "week_header": "W 13 November 2 - November 6 :",
-      "writing_tasks": [],
-      "ixl_due": "IXL Homework due Sunday 11/8",
-      "ixl_items": [
-        "Determine multiple themes of short stories",
-        "Identify the author's purpose and message",
-        "Sort sensory details"
-      ],
-      "spelling_title": "",
-      "spelling_words": [],
-      "tests": []
-    },
     "Science": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "UNIT 3: Energy and Matter in Organisms",
-      "week_header": "W13 NOVEMBER 2 - NOVEMBER 6 :",
-      "video_summary": "",
-      "ixl_due": "IXL Homework due Sunday 1/1/8",
-      "ixl_items": [
-        "How does matter move in food chains?",
-        "Interpret food webs I"
+      "teacher": "Mrs. Maoued",
+      "module": "Unit 2, L.1. States of Matter.",
+      "tasks": [
+        "test review.",
+        "Study Guide",
+        "Blooket Review 2",
+        "Blooket Review 1",
+        "IXL L.2"
       ],
-      "tasks": [],
-      "tests": []
+      "tests": [
+        "Lesson 3 quiz.",
+        "Unit test."
+      ]
     },
-    "Social Studies": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Social Studies",
-      "week_header": "W 13 november 2 - november 6 :",
-      "video_summary": "",
-      "ixl_due": "IXL Homework due Sunday 11/8",
-      "ixl_items": [
-        "Identify lines of latitude and longitude",
-        "Cities of the Midwest"
+    "Language Arts": {
+      "teacher": "Mrs. Stewart / Ms. Carman",
+      "module": "Quarter 1",
+      "tasks": [
+        "Homework:",
+        "IXL Skills W.3; W.4; XX.1"
       ],
-      "tasks": [],
-      "tests": []
+      "tests": [
+        "Classwork: Vocab quiz over UNIT VOCAB"
+      ]
     },
-    "Mathematics": {
-      "template_type": "math",
-      "teacher": "Mrs. Hiba Naffakh",
-      "module": "Module 7",
-      "has_deltamath": true,
-      "ixl_codes": [
-        "QQ-1",
-        "QQ-2",
-        "Leaderboards"
+    "US History II": {
+      "teacher": "Ms. Anderson",
+      "module": "Module 1",
+      "tasks": [
+        "7 Lesson 1-2 review",
+        "Study guide  assigned for hw due 11/05",
+        "17 Lesson 3-4 review",
+        "Study Guide due"
+      ],
+      "tests": [
+        "Module 17 Test",
+        "Module 17 Test Review"
+      ]
+    },
+    "Mathematics (Algebra I)": {
+      "teacher": "Mrs. Cluskey",
+      "module": "Algebra I",
+      "tasks": [
+        "11/2 - Solving One Variable Inequalities",
+        "11/3-Introduction to Compound Inequalities",
+        "11/4 - Introduction to Compound Inequalities",
+        "11/5- Solving Systems of Linear Inequalities",
+        "11/6 - Solving Systems of Linear Inequalities"
       ],
       "tests": []
     },
     "Qur'an & Arabic": {
-      "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
-      "week": "Q2 Week 13- Nov 02- 06",
-      "main_hifz": "Surah Al-Maarij (Ayah 1–39)",
-      "review_surahs": [
-        "Surah An-Naba",
-        "Surah An-Nazia'at",
-        "Surah Abasa",
-        "Surah At-Takweer"
+      "week": "DU QUR'AN & ARABIC - Q2 Week 13- NOV 02- 06",
+      "tasks": [
+        "Hifz: Surah Ar-Rahmaan",
+        "Friday: Tilawah — Surat Al-Kahf 1-10",
+        "Arabic Lesson — آداب الطَّعَامِ (Food Etiquettes)",
+        "Arabic Activity Platforms: Wordwall Activity, Quizlet Flashcards, Book/Notebook Practice"
       ],
-      "friday_recitation": ". The teacher will evaluate the student’s recitation of Surah Al-Kahf, focusing on the correct application of Meem Mushaddadah and Noon Mushaddadah and the proper pronunciation of the letters. Students will also be asked to explain the rule to demonstrate their understanding. Based on their performance, the teacher will determine whether additional worksheets and practice are needed to reinforce their learning.",
-      "arabic_unit": "",
-      "arabic_topics": [
-        "Letter Baa (حرف الباء) Pronunciation & Reading"
-      ],
-      "study_guide": "",
-      "arabic_platforms": [
-        "Quizlet Flashcards",
-        "Wordwall Activity",
-        "Book/Notebook Practice"
-      ],
-      "flashcards": [
-        "Wordwall:"
-      ],
-      "tests": []
+      "tests": [
+        "Qur'an Memorization Test (Thursday): Surah Ar-Rahmaan (Ayah 1-23)",
+        "reading test"
+      ]
     },
     "Islamic Studies": {
-      "template_type": "is",
-      "teacher": "Mrs. Mubeen Fatima",
-      "chapter_topic": "Belief in the Day of Judgement",
-      "subtopics": [],
-      "workbook_task": "",
-      "presentation_task": "",
-      "tasks": [
-        "Prophets of Allah -Project Presentation"
-      ],
-      "tests": []
+      "teacher": "Ms. Mahmood",
+      "module": "Islamic Studies",
+      "tasks": [],
+      "tests": [
+        "review Quiz will be posted",
+        "Quiz Sheet"
+      ]
     },
     "Computers": {
-      "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "tech_topic": "",
-      "edclub_task": "",
-      "typing_task": "",
+      "module": "Learn by doing Sheets latest version",
+      "tasks": [],
       "tests": [
-        "Test on  Thursday Nov 5th",
-        "Study guide for the test",
-        "To study for the test- go to your edclub account and study these lessons (222- 246)"
+        "Test"
       ]
     }
   },
-  "week_title": "Quarter 2 Week 13"
+  "week_title": "DU QUR'AN & ARABIC - Q2 Week 13- NOV 02- 06"
 }
