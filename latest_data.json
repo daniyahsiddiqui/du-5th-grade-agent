@@ -1,120 +1,99 @@
 {
-  "scrape_date": "2026-11-08 18:36",
+  "scrape_date": "2026-11-08 18:43",
   "reference_date": "2026-11-09",
   "upcoming_events": [
-    "Friday, Oct 30 - DU/ICP Community Vaccine Clinic  [12:00-12:30PM – for DU Staff and Students; 2:00PM onwards – for general community] – DU/ICP, in partnership with Walgreens, will host a Community Vaccine Clinic on Friday, October 30, in the school gym. Flu vaccines will be available, including free flu shots for uninsured individuals through Walgreens vouchers. Additional vaccines may be available based on eligibility and insurance coverage.",
-    "Attendees are encouraged to bring their insurance card, photo ID, and vaccination records, if available. Female immunizers are expected to be onsite. Staff are welcome to attend and encouraged to share this opportunity with family and community members.",
-    "If you are interested in this opportunity, please fill out this participation and consent form -",
-    "Community Vaccine Clinic Oct 30  – Fill out form – Monday, Nov 16 -",
-    "Arabic Spelling Bee, Grade 1-3",
-    "Monday, Nov 16 – Arabic Spelling Bee, Grade 4-8, Elimination rounds",
-    "Friday, Nov 20 – - Arabic Spelling Bee, Grade 4-8, Final rounds",
-    "Friday, Nov 20 – - Family Reading Night, 6:00-8:00PM",
-    "We look forward to your involvement in making this Family Reading Night a memorable and successful event!",
-    "Please plan on attending as our class is presenting a play to the audience!",
-    "Date: Friday, Nov 20, 2026 – Timings: 6:00pm-8:00pm",
-    "Theme: \"Rainforest: Rooted in Nature\"",
-    "Wednesday, Nov 25 - Friday, Nov 27 – - Fall Break"
+    "No explicit upcoming school events posted for this week."
   ],
   "subjects": {
-    "Language Arts": {
-      "template_type": "ela",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "This week we will start MODULE 5 - PROJECT EARTH where students will read about taking care of the Earth's environment. — Students must memorize their lines at home, and come to school ready to practice with their peers., Write, a",
-      "week_header": "W 14 November 9 - November 13 :",
-      "writing_tasks": [
-        "No IXL Homework this week",
-        "Homework",
-        "Due monday 11/13 This will count as a summative assessment. Grades will be lost for late work."
-      ],
-      "ixl_due": "",
-      "ixl_items": [],
-      "spelling_title": "",
-      "spelling_words": [],
-      "tests": []
-    },
     "Science": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "We will start UNIT 4: Energy and Matter in Ecosystems",
-      "week_header": "W14 NOVEMBER 9 - NOVEMBER 13 :",
-      "video_summary": "",
-      "ixl_due": "",
-      "ixl_items": [],
-      "tasks": [],
-      "tests": [
-        "UNIT 3 TEST on Monday 11/9"
-      ]
-    },
-    "Social Studies": {
-      "template_type": "science_ss",
-      "teacher": "Mrs. Tasneim Khalifa",
-      "module": "Social Studies",
-      "week_header": "W 14 november 9 - november 13 :",
-      "video_summary": "",
-      "ixl_due": "",
-      "ixl_items": [],
-      "tasks": [],
-      "tests": []
-    },
-    "Mathematics": {
-      "template_type": "math",
-      "teacher": "Mrs. Hiba Naffakh",
-      "module": "Module 7",
-      "has_deltamath": true,
-      "ixl_codes": [
-        "II-1",
-        "II-2",
-        "Leaderboards"
+      "teacher": "Mrs. Maoued",
+      "module": "Unit 2, L.2. Changes in State.",
+      "tasks": [
+        "Workbook pages 74-78.",
+        "Homework: pages 84-85",
+        "Workbook pages",
+        "IXL L.1"
       ],
       "tests": [
-        "Module Test on Thursday"
+        "Lesson 1 quiz."
       ]
+    },
+    "Language Arts": {
+      "teacher": "Mrs. Stewart / Ms. Carman",
+      "module": "Quarter 1",
+      "tasks": [
+        "Homework:",
+        "IXL Skills W.3; W.4; XX.1"
+      ],
+      "tests": [
+        "Classwork: Vocab quiz over UNIT VOCAB"
+      ]
+    },
+    "US History II": {
+      "teacher": "Ms. Anderson",
+      "module": "Module 18 Lesson 3: The War in the East",
+      "tasks": [
+        "Lesson 1 HW DUE",
+        "Lesson 1 Quiz",
+        "Lesson 2 Quiz",
+        "Lesson 3 Quiz",
+        "Lesson 4 HW assigned due: 11/16",
+        "Lesson 4 Quiz: 11/16"
+      ],
+      "tests": [
+        "Module 17 Test review"
+      ]
+    },
+    "Mathematics (Algebra I)": {
+      "teacher": "Mrs. Cluskey",
+      "module": "Algebra I",
+      "tasks": [
+        "11/9- S",
+        "olving a System of Linear Equations (Substitution)",
+        "11/10- Solving a System of Linear Equations (",
+        "Linear Combinations",
+        "11/11- Solving a System of Linear Equations Practice (",
+        "Mixed",
+        "11/12- Graphing Two Variable Inequalities",
+        "13- Graphing Two Variable Inequalities Practice"
+      ],
+      "tests": []
     },
     "Qur'an & Arabic": {
-      "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
-      "week": "Q2 Week 14- Nov 9- 13",
-      "main_hifz": "Surah Al-Maarij (Ayah 1–44)",
-      "review_surahs": [
-        "Surah An-Naba",
-        "Surah An-Nazia'at",
-        "Surah Abasa",
-        "Surah At-Takweer"
+      "week": "DU QUR'AN & ARABIC - Q2 Week 14- Nov 9-13",
+      "tasks": [
+        "Hifz: Surah Ar-Rahmaan",
+        "Friday: Tilawah — Surat Al-Kahf 1-10",
+        "Friday: Tilawah — Al-Kahf 1-",
+        "Tajweed: Rules of Noon Sakinah and Tanween",
+        "Arabic Activity Platforms: Quizlet Flashcards, Wordwall Activity"
       ],
-      "friday_recitation": ". The teacher will evaluate the student’s recitation of Surah Al-Kahf, focusing on the correct application of Meem Mushaddadah and Noon Mushaddadah and the proper pronunciation of the letters. Students will also be asked to explain the rule to demonstrate their understanding. Based on their performance, the teacher will determine whether additional worksheets and practice are needed to reinforce their learning.",
-      "arabic_unit": "",
-      "arabic_topics": [
-        "Letter Baa (حرف الباء) Pronunciation & Reading"
-      ],
-      "study_guide": "",
-      "arabic_platforms": [
-        "Wordwall Activity",
-        "Book/Notebook Practice"
-      ],
-      "flashcards": [
-        "Wordwall:"
-      ],
-      "tests": []
+      "tests": [
+        "Qur'an Memorization Test (Thursday): Surah Ar-Rahmaan",
+        "reading test",
+        "In Sha Allah, the vocabulary words quiz will be on",
+        "The Quiz will be,In Sha Allah, on both the meaning and the spelling the vocabulary words"
+      ]
     },
     "Islamic Studies": {
-      "template_type": "is",
-      "teacher": "Mrs. Mubeen Fatima",
-      "chapter_topic": "Belief in the Day of Judgement",
-      "subtopics": [],
-      "workbook_task": "",
-      "presentation_task": "",
+      "teacher": "Ms. Mahmood",
+      "module": "Islamic Studies",
       "tasks": [],
-      "tests": []
+      "tests": [
+        "TEST 13th Friday, Nov",
+        "Review QUIZ",
+        "TEST Dua Of SHIRK"
+      ]
     },
     "Computers": {
-      "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "tech_topic": "",
-      "edclub_task": "",
-      "typing_task": "Typing",
+      "module": "Click on lesson - Intro to App Lab",
+      "tasks": [
+        "No explicit Computers assignments posted for this week."
+      ],
       "tests": []
     }
   },
-  "week_title": "Quarter 2 Week 14"
+  "week_title": "DU QUR'AN & ARABIC - Q2 Week 14- Nov 9-13"
 }
