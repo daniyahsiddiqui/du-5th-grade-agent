@@ -1,93 +1,129 @@
 {
-  "scrape_date": "2026-11-15 19:38",
-  "reference_date": "2026-11-16",
+  "scrape_date": "2026-11-22 20:31",
+  "reference_date": "2026-11-23",
   "upcoming_events": [
-    "No explicit upcoming school events posted for this week."
+    "Friday, Nov 13 – - Heartmade Winter Coat Drive BEGINS",
+    "Saturday, Nov 14 – - Lego League Scrimmage",
+    "Monday, Nov 16 – Arabic Spelling Bee, Grade 1-3, In class rounds",
+    "Monday, Nov 16 – Arabic Spelling Bee, Grade 4-8, In class and Elimination rounds",
+    "Thursday, Nov 19 – - Arabic Spelling Bee, Grade 4-8, Finals, 2PM-3:15PM",
+    "Friday, Nov 20 – Abaya & Thawb Day",
+    "Friday, Nov 20 – - Family Reading Night, 5:30-7:30PM",
+    "Wednesday, Nov 25 - Friday, Nov 27 – - Fall Break",
+    "Friday, Nov 20 – - Family Reading Night, 6:00-8:00PM",
+    "We look forward to your involvement in making this Family Reading Night a memorable and successful event!",
+    "Please plan on attending as our class is presenting a play to the audience!",
+    "Date: Friday, Nov 20, 2026 – Timings: 6:00pm-8:00pm",
+    "Theme: \"Rainforest: Rooted in Nature\"",
+    "Wednesday, Nov 25 - Friday, Nov 27 – - Fall Break",
+    "DUHS Heartmade Club Winter Coat Drive [Please post on class websites]",
+    "DUHS Heartmade Club students will host a winter coat drive from Friday, November 13th, to Friday, December 4th. Donations include new or brand-new condition coats, hats, gloves, and scarves. Please drop off donations at the DU School entrance, between the double doors. For more information, contact – create.heartmade@gmail.com",
+    "Arabic Spelling Bee",
+    "G1-G3: In class competition on Monday, November 16, 2026. – G4-G8: Elimination round: Monday, November 16, 2026.",
+    "Final round: Thursday, November 19, 2026, 2PM-3:15PM – Any student in grades 1-8 is eligible to participate. The Spelling Bee Study Lists have been posted on all Arabic and Qur'an class websites along with the competition rules."
   ],
   "subjects": {
-    "Science": {
-      "teacher": "Mrs. Maoued",
-      "module": "Unit 3, L.1. Chemical Reactions.",
-      "tasks": [
-        "test review.",
-        "Study Guide",
-        "Unit 2 test review.",
-        "Grow day.",
-        "Workbook pages 119-121.",
-        "IXL G.1",
-        "Workbook pages"
-      ],
-      "tests": [
-        "Unit test."
-      ]
-    },
     "Language Arts": {
-      "teacher": "Mrs. Stewart / Ms. Carman",
-      "module": "Quarter 1",
+      "template_type": "ela",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "This week we will start MODULE 6 - ART FOR EVERYONE! where students will learn about the ARTS! — Students must memorize their lines at home, and come to school ready to practice with their peers.",
+      "week_header": "W 15 November 16 - November 20 :",
+      "writing_tasks": [
+        "No IXL Homework this week"
+      ],
+      "ixl_due": "",
+      "ixl_items": [],
+      "spelling_title": "",
+      "spelling_words": [],
+      "tests": []
+    },
+    "Science": {
+      "template_type": "science_ss",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "UNIT 4: Energy and Matter in Ecosystems",
+      "week_header": "W1 5 NOVEMBER 16 - NOVEMBER 20 :",
+      "video_summary": "",
+      "ixl_due": "",
+      "ixl_items": [],
       "tasks": [
-        "No explicit Language Arts homework or deadlines posted for this week."
+        "Science Project",
+        "Project Title: From One Organism to the Entire Biosphere",
+        "Project Overview",
+        "For this science project, you will construct a colourful, three-dimensional semicircle poster illustrating the six levels of ecological organization.",
+        "Your project must follow the 3D semicircle design demonstrated in the reference image.",
+        "Your project"
       ],
       "tests": []
     },
-    "US History II": {
-      "teacher": "Ms. Anderson",
-      "module": "Module 18 Lesson 3: The War in the East",
+    "Social Studies": {
+      "template_type": "science_ss",
+      "teacher": "Mrs. Tasneim Khalifa",
+      "module": "Before the United States became an independent nation, thirteen British colonies were established along the Atlantic coast of North America.",
+      "week_header": "W 15 november 16 - november 20 :",
+      "video_summary": "Watch video: https://www.youtube.com/watch?v=D_MUtWssRJE&t=104s",
+      "ixl_due": "",
+      "ixl_items": [],
       "tasks": [
-        "Lesson 1 HW DUE",
-        "Lesson 1 Quiz",
-        "Lesson 2 Quiz",
-        "Lesson 3 Quiz",
-        "Lesson 4 HW assigned due: 11/16",
-        "Lesson 4 Quiz: 11/16"
+        "Social Studies Project",
+        "ures and illustrations. Color-code your timeline to depict colonies in the different regions. Include a color-coded map of the 13 colonies in your project."
       ],
       "tests": [
-        "Module 17 Test review"
+        "Quiz on Thursday 11/19"
       ]
     },
-    "Mathematics (Algebra I)": {
-      "teacher": "Mrs. Cluskey",
-      "module": "Algebra I",
-      "tasks": [
-        "11/16-Modeling with Two Variable Inequalities",
-        "11/17-Modeling with Two Variable Inequalities Practice",
-        "11/18- Modeling with Two Variable Inequalities Essa",
-        "y Prep Day",
-        "11/19- Modeling with Two Variable Inequalities Practice",
-        "20- Essay Da"
+    "Mathematics": {
+      "template_type": "math",
+      "teacher": "Mrs. Hiba Naffakh",
+      "module": "Module 7: Test on",
+      "has_deltamath": true,
+      "ixl_codes": [
+        "F-2",
+        "F-3",
+        "Leaderboards"
       ],
-      "tests": []
+      "tests": [
+        "Test on",
+        "Practice Test was sent with the students"
+      ]
     },
     "Qur'an & Arabic": {
+      "template_type": "quran",
       "teacher": "Mrs. Iman Luteify",
-      "week": "DU QUR'AN & ARABIC - Q2 Week 15- Nov 16- 20",
-      "tasks": [
-        "Hifz: Surah Ar-Rahmaan",
-        "Friday: Tilawah — Surat Al-Kahf",
-        "Friday: Tilawah — Al-Kahf 1-20",
-        "Tajweed: Rules of Noon Sakinah and Tanween",
-        "Arabic Activity Platforms: Wordwall Activity, Quizlet Flashcards"
+      "week": "Q2 Week 16- Nov 23- Nov 24",
+      "main_hifz": "Surah Al-Haqqah (Ayah 1–5)",
+      "review_surahs": [
+        "Surah An-Naba",
+        "Surah Al-Maarij",
+        "Surah An-Nazia'at"
       ],
-      "tests": [
-        "Qur'an Memorization Test (Thursday): Surah Ar-Rahmaan",
-        "reading test"
-      ]
+      "friday_recitation": "",
+      "arabic_unit": "",
+      "arabic_topics": [],
+      "study_guide": "",
+      "arabic_platforms": [
+        "Book/Notebook Practice"
+      ],
+      "flashcards": [],
+      "tests": []
     },
     "Islamic Studies": {
-      "teacher": "Ms. Mahmood",
-      "module": "Islamic Studies",
-      "tasks": [
-        "No explicit Islamic Studies assignments posted for this week."
-      ],
+      "template_type": "is",
+      "teacher": "Mrs. Mubeen Fatima",
+      "chapter_topic": "Belief in Allah's Decree",
+      "subtopics": [],
+      "workbook_task": "",
+      "presentation_task": "",
+      "tasks": [],
       "tests": []
     },
     "Computers": {
+      "template_type": "computers",
       "teacher": "Mrs. Mubeen Fatima",
-      "module": "Click on lesson - Intro to App Lab",
-      "tasks": [
-        "No explicit Computers assignments posted for this week."
-      ],
+      "tech_topic": "",
+      "edclub_task": "",
+      "typing_task": "",
       "tests": []
     }
   },
-  "week_title": "DU QUR'AN & ARABIC - Q2 Week 15- Nov 16- 20"
+  "week_title": "Quarter 2 Week 16"
 }
